@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+		<!-- Removed duplicate grouping filter - category_id grouping is already available in standard view -->
+
+		<record id="view_view_account_payment_form_inhertied"
+			model="ir.ui.view">
+			<field name="name">view.account.payment.form.inherit</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id"
+				ref="account.view_account_payment_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='payment_method_line_id']"
+					position="after">
+					<field name="category_id" widget="many2many_tags"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						placeholder="Tags..." />
+					<!--<field name="inv_untax_amt" invisible="1" />-->
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_view_account_payment_form_inhertied_tw"
+			model="ir.ui.view">
+			<field name="name">view.account.payment.registerform.inherit</field>
+			<field name="model">account.payment.register</field>
+			<field name="inherit_id"
+				ref="account.view_account_payment_register_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='payment_method_line_id']"
+					position="after">
+					<field name="category_id" widget="many2many_tags"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						placeholder="Tags..." />
+					<!--<field name="inv_untax_amt" invisible="1" />-->
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_view_account_payment_tree_inhertied"
+			model="ir.ui.view">
+			<field name="name">view.account.payment.tree.inherit</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id"
+				ref="account.view_account_payment_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='partner_id']" position="after">
+					<field name="category_id" widget="many2many_tags" optional="hide"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						placeholder="Tags..." />
+					<!--<field name="inv_untax_amt" sum="inv_untax_amt" />-->
+					<!--<field name="company_currency_id" invisible="1" />
+					<field name="company_cur_tax_exc" string="Untaxed CHF" sum="Total" optional="show" widget="monetary" options="{'currency_field': 'company_currency_id'}" />-->
+				</xpath>
+				<!--<xpath expr="//field[@name='amount_signed']" position="after">
+					<field name="company_cur_total" string="Amount CHF" sum="Total" decoration-bf="1" optional="show" widget="monetary" options="{'currency_field': 'company_currency_id'}" />
+				</xpath>-->
+				<xpath expr="//field[@name='amount_signed']" position="attributes">
+					<attribute name="string">Valuta locale</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_account_payment_search_inherited" model="ir.ui.view">
+			<field name="name">account.payment.search.inherit</field>
+			<field name="model">account.payment</field>
+			<field name="inherit_id" ref="account.view_account_payment_search"/>
+			<field name="arch" type="xml">
+				<xpath expr="//search" position="inside">
+					<filter string="Riferimento interno" name="category_id" context="{'group_by': 'category_id'}"/>
+					<field name="category_id"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_res_partner_form_inhertied" model="ir.ui.view">
+			<field name="name">view.res.partner.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='category_id']" position="after">
+					<field name="move_category_id" widget="many2many_tags"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						placeholder="Tags..." />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_account_move_form_inhertied"
+			model="ir.ui.view">
+			<field name="name">view.account.move.inherit</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='ref']" position="before">
+					<field name="category_id" widget="many2many_tags"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						placeholder="Tags..." />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_account_move_tree_inhertied"
+			model="ir.ui.view">
+			<field name="name">view.account.move.tree.inherit</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_invoice_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='invoice_origin']" position="after">
+					<field name="category_id" widget="many2many_tags"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						placeholder="Tags..." />
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_account_invoice_filter_inherited" model="ir.ui.view">
+			<field name="name">account.invoice.select.inherit</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
+			<field name="arch" type="xml">
+				<xpath expr="//search" position="inside">
+					<filter string="Riferimento interno" name="category_id" context="{'group_by': 'category_id'}"/>
+					<field name="category_id"/>
+				</xpath>
+			</field>
+		</record>
+
+		<!-- Categories -->
+		<record id="view_account_move_category_form" model="ir.ui.view">
+			<field name="name">Invoice Tags</field>
+			<field name="model">account.move.category</field>
+			<field name="arch" type="xml">
+				<form string="Invoice Tag">
+					<sheet>
+						<group col="4">
+							<field name="name" />
+							<field name="active" widget="boolean_toggle" />
+							<field name="parent_id" />
+							<field name="color" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_account_move_category_list" model="ir.ui.view">
+			<field name="name">Invoice Tags</field>
+			<field name="model">account.move.category</field>
+			<field eval="6" name="priority" />
+			<field name="arch" type="xml">
+				<tree string="Invoice Tags">
+					<field name="sequence" widget="handle" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="res_account_move_category_view_search"
+			model="ir.ui.view">
+			<field name="name">account.move.category.view.search</field>
+			<field name="model">account.move.category</field>
+			<field name="arch" type="xml">
+				<search string="Search Move Category">
+					<field name="name" />
+					<separator />
+					<filter string="Archived" name="inactive"
+						domain="[('active', '=', False)]" />
+				</search>
+			</field>
+		</record>
+
+		<record id="action_account_move_category_form"
+			model="ir.actions.act_window">
+			<field name="name">Invoice Tags</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.move.category</field>
+			<field name="search_view_id"
+				ref="res_account_move_category_view_search" />
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face">
+					Create a new contact tag
+				</p>
+				<p>
+					Manage contact tags to better classify them for tracking and
+					analysis
+					purposes.
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="menu_account_move_category_form"
+			action="action_account_move_category_form" name="Invoice Tags"
+			sequence="1" parent="account.account_invoicing_menu" />
+
+		<record id="view_account_move_graph_sale" model="ir.ui.view">
+			<field name="name">view.account.move.graph</field>
+			<field name="model">account.move</field>
+			<field name="arch" type="xml">
+				<graph string="Account Invoice" type="bar">
+					<field name="invoice_user_id" />
+					<field name="amount_total" type="measure" />
+				</graph>
+			</field>
+		</record>
+		<record id="account.action_move_out_invoice_type"
+			model="ir.actions.act_window">
+			<field name="name">Invoices</field>
+			<field name="res_model">account.move</field>
+			<field name="view_mode">tree,kanban,form,graph</field>
+			<field name="view_id" ref="account.view_invoice_tree" />
+			<field name="search_view_id"
+				ref="account.view_account_invoice_filter" />
+			<field name="domain">[('move_type', '=', 'out_invoice')]</field>
+			<field name="context">{'default_type': 'out_invoice'}</field>
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face">
+					Create a customer invoice
+				</p>
+				<p>
+					Create invoices, register payments and keep track of the discussions with
+					your customers.
+				</p>
+			</field>
+		</record>
+	</data>
+</odoo>
