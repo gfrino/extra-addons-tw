@@ -17,6 +17,12 @@ class CalcoloMargini(models.Model):
     pagamenti_fornitori = fields.Monetary(string='Pagamenti Fornitori', compute='_compute_totals', store=True)
     costi_fissi = fields.Monetary(string='Costi Fissi', compute='_compute_totals', store=True)
     costi_variabili = fields.Monetary(string='Costi Variabili', compute='_compute_totals', store=True)
+    costi_fissi_payment_ids = fields.Many2many(
+        'account.payment', compute='_compute_totals', string='Pagamenti Costi Fissi', readonly=True
+    )
+    costi_variabili_payment_ids = fields.Many2many(
+        'account.payment', compute='_compute_totals', string='Pagamenti Costi Variabili', readonly=True
+    )
     buste_paghe = fields.Monetary(string='Buste Paghe', compute='_compute_totals', store=True)
     incassi = fields.Monetary(string='Incassi', compute='_compute_totals', store=True)
     margine = fields.Monetary(string='Margine', compute='_compute_margine', store=True)
@@ -70,6 +76,8 @@ class CalcoloMargini(models.Model):
             # Classificazione AI dei costi fissi e variabili
             costi_fissi = 0
             costi_variabili = 0
+            fixed_payments = self.env['account.payment']
+            variable_payments = self.env['account.payment']
             
             for payment in payments:
                 # Ottieni la fattura collegata al pagamento
@@ -83,11 +91,15 @@ class CalcoloMargini(models.Model):
                 
                 if is_fixed_cost:
                     costi_fissi += payment.amount
+                    fixed_payments |= payment
                 else:
                     costi_variabili += payment.amount
+                    variable_payments |= payment
             
             record.costi_fissi = costi_fissi
             record.costi_variabili = costi_variabili
+            record.costi_fissi_payment_ids = fixed_payments
+            record.costi_variabili_payment_ids = variable_payments
 
             # 2. Buste paghe
             payslip_domain = [
@@ -281,3 +293,22 @@ class CalcoloMargini(models.Model):
                 'group_by': 'ref',
             },
         }
+
+    def _action_view_specific_payments(self, payments, title):
+        self.ensure_one()
+        if not payments:
+            return {'type': 'ir.actions.act_window_close'}
+        return {
+            'name': f'{title} - {self.name}',
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.payment',
+            'view_mode': 'tree,form',
+            'domain': [('id', 'in', payments.ids)],
+            'context': {'create': False},
+        }
+
+    def action_view_costi_fissi(self):
+        return self._action_view_specific_payments(self.costi_fissi_payment_ids, 'Costi Fissi')
+
+    def action_view_costi_variabili(self):
+        return self._action_view_specific_payments(self.costi_variabili_payment_ids, 'Costi Variabili')

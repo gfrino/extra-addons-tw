@@ -44,56 +44,55 @@
                             <field name="currency_id" invisible="1"/>
                         </group>
                     </group>
-                    <group>
-                        <group string="Uscite">
-                            <label for="pagamenti_fornitori" string="Pagamenti"/>
-                            <div class="o_row">
-                                <field name="pagamenti_fornitori" widget="monetary" class="oe_inline"/>
-                                <button name="action_view_pagamenti_fornitori" 
-                                        type="object" 
-                                        string="→ Vedi dettagli" 
-                                        class="oe_link oe_inline ps-2"
-                                        invisible="pagamenti_fornitori == 0"/>
+                    <div style="margin-top: 24px; display: grid; gap: 24px;">
+                        <div style="border: 1px solid #dedede; border-radius: 10px; padding: 20px;">
+                            <h3 style="margin: 0 0 10px; text-transform: uppercase; letter-spacing: .05em; font-size: 14px; color: #7a7a7a;">Uscite</h3>
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size: 18px; font-weight:600;">
+                                <span>Pagamenti</span>
+                                <span>
+                                    <field name="pagamenti_fornitori" widget="monetary" class="oe_inline"/>
+                                    <button name="action_view_pagamenti_fornitori" type="object" string="dettagli" class="oe_link ms-2" invisible="pagamenti_fornitori == 0"/>
+                                </span>
                             </div>
-                            <div style="margin-left: 30px;">
-                                <label for="costi_fissi" string="Costi Fissi"/>
-                                <div class="o_row">
-                                    <field name="costi_fissi" widget="monetary" class="text-muted"/>
+                            <div style="margin-top:12px; padding-left:24px; color:#7a7a7a;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:6px; align-items:center;">
+                                    <span>Costi Fissi</span>
+                                    <span>
+                                        <field name="costi_fissi" widget="monetary" class="oe_inline"/>
+                                        <button name="action_view_costi_fissi" type="object" string="dettagli" class="oe_link ms-2" invisible="costi_fissi == 0"/>
+                                    </span>
                                 </div>
-                                <label for="costi_variabili" string="Costi Variabili"/>
-                                <div class="o_row">
-                                    <field name="costi_variabili" widget="monetary" class="text-muted"/>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span>Costi Variabili</span>
+                                    <span>
+                                        <field name="costi_variabili" widget="monetary" class="oe_inline"/>
+                                        <button name="action_view_costi_variabili" type="object" string="dettagli" class="oe_link ms-2" invisible="costi_variabili == 0"/>
+                                    </span>
                                 </div>
                             </div>
-                            <label for="buste_paghe"/>
-                            <div class="o_row">
-                                <field name="buste_paghe" widget="monetary" class="oe_inline"/>
-                                <button name="action_view_buste_paghe" 
-                                        type="object" 
-                                        string="→ Vedi dettagli" 
-                                        class="oe_link oe_inline ps-2"
-                                        invisible="buste_paghe == 0"/>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:18px; font-size: 18px; font-weight:600;">
+                                <span>Buste Paghe</span>
+                                <span>
+                                    <field name="buste_paghe" widget="monetary" class="oe_inline"/>
+                                    <button name="action_view_buste_paghe" type="object" string="dettagli" class="oe_link ms-2" invisible="buste_paghe == 0"/>
+                                </span>
                             </div>
-                        </group>
-                        <group string="Entrate">
-                            <label for="incassi"/>
-                            <div class="o_row">
-                                <field name="incassi" widget="monetary" class="oe_inline"/>
-                                <button name="action_view_incassi" 
-                                        type="object" 
-                                        string="→ Vedi dettagli" 
-                                        class="oe_link oe_inline ps-2"
-                                        invisible="incassi == 0"/>
+                        </div>
+                        <div style="border: 1px solid #dedede; border-radius: 10px; padding: 20px;">
+                            <h3 style="margin: 0 0 10px; text-transform: uppercase; letter-spacing: .05em; font-size: 14px; color: #7a7a7a;">Entrate</h3>
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size: 18px; font-weight:600;">
+                                <span>Incassi</span>
+                                <span>
+                                    <field name="incassi" widget="monetary" class="oe_inline"/>
+                                    <button name="action_view_incassi" type="object" string="dettagli" class="oe_link ms-2" invisible="incassi == 0"/>
+                                </span>
                             </div>
-                        </group>
-                    </group>
-                    <group>
-                        <group>
-                            <field name="margine" widget="monetary" 
-                                   class="oe_subtotal_footer_separator"
-                                   style="font-size: 1.5em; font-weight: bold;"/>
-                        </group>
-                    </group>
+                        </div>
+                        <div style="border: 1px solid #dedede; border-radius: 10px; padding: 24px; text-align:right;">
+                            <span style="text-transform:uppercase; letter-spacing:.05em; color:#7a7a7a;">Margine</span>
+                            <field name="margine" widget="monetary" style="font-size: 32px; font-weight:700; margin-left:16px;"/>
+                        </div>
+                    </div>
                 </sheet>
             </form>
         </field>
