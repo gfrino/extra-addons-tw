@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu principale -->
+    <menuitem id="menu_calcolo_margini_root"
+              name="Calcolo Margini"
+              sequence="50"
+              web_icon="tw_calcolo_margini,static/description/icon.png"
+              action="action_calcolo_margini"
+              groups="tw_calcolo_margini.group_margini_user,tw_calcolo_margini.group_margini_admin"/>
+
+    <!-- Sottomenu (opzionale) -->
+    <menuitem id="menu_calcolo_margini_main"
+              name="Margini"
+              parent="menu_calcolo_margini_root"
+              action="action_calcolo_margini"
+              sequence="1"
+              groups="tw_calcolo_margini.group_margini_user,tw_calcolo_margini.group_margini_admin"/>
+
+</odoo>

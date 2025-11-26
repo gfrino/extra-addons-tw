@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_calcolo_margini_tree" model="ir.ui.view">
+        <field name="name">calcolo.margini.tree</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <tree string="Calcolo Margini" create="1" delete="1">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="pagamenti_fornitori" widget="monetary" sum="Totale"/>
+                <field name="buste_paghe" widget="monetary" sum="Totale"/>
+                <field name="incassi" widget="monetary" sum="Totale"/>
+                <field name="margine" widget="monetary" sum="Totale" 
+                       decoration-success="margine &gt; 0"
+                       decoration-danger="margine &lt; 0"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_calcolo_margini_form" model="ir.ui.view">
+        <field name="name">calcolo.margini.form</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <form string="Calcolo Margini">
+                <header>
+                    <button name="action_refresh" string="Aggiorna" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <div style="margin-top: 24px; display: grid; gap: 24px;">
+                        <div style="border: 1px solid #dedede; border-radius: 10px; padding: 20px;">
+                            <h3 style="margin: 0 0 10px; text-transform: uppercase; letter-spacing: .05em; font-size: 14px; color: #7a7a7a;">Uscite</h3>
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size: 18px; font-weight:600;">
+                                <span>Pagamenti</span>
+                                <span>
+                                    <field name="pagamenti_fornitori" widget="monetary" class="oe_inline"/>
+                                    <button name="action_view_pagamenti_fornitori" type="object" string="dettagli" class="oe_link ms-2" invisible="pagamenti_fornitori == 0"/>
+                                </span>
+                            </div>
+                            <div style="margin-top:12px; padding-left:24px; color:#7a7a7a;">
+                                <div style="display:flex; justify-content:space-between; margin-bottom:6px; align-items:center;">
+                                    <span>Costi Fissi</span>
+                                    <span>
+                                        <field name="costi_fissi" widget="monetary" class="oe_inline"/>
+                                        <button name="action_view_costi_fissi" type="object" string="dettagli" class="oe_link ms-2" invisible="costi_fissi == 0"/>
+                                    </span>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span>Costi Variabili</span>
+                                    <span>
+                                        <field name="costi_variabili" widget="monetary" class="oe_inline"/>
+                                        <button name="action_view_costi_variabili" type="object" string="dettagli" class="oe_link ms-2" invisible="costi_variabili == 0"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:18px; font-size: 18px; font-weight:600;">
+                                <span>Buste Paghe</span>
+                                <span>
+                                    <field name="buste_paghe" widget="monetary" class="oe_inline"/>
+                                    <button name="action_view_buste_paghe" type="object" string="dettagli" class="oe_link ms-2" invisible="buste_paghe == 0"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="border: 1px solid #dedede; border-radius: 10px; padding: 20px;">
+                            <h3 style="margin: 0 0 10px; text-transform: uppercase; letter-spacing: .05em; font-size: 14px; color: #7a7a7a;">Entrate</h3>
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-size: 18px; font-weight:600;">
+                                <span>Incassi</span>
+                                <span>
+                                    <field name="incassi" widget="monetary" class="oe_inline"/>
+                                    <button name="action_view_incassi" type="object" string="dettagli" class="oe_link ms-2" invisible="incassi == 0"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="border: 1px solid #dedede; border-radius: 10px; padding: 24px; text-align:right;">
+                            <span style="text-transform:uppercase; letter-spacing:.05em; color:#7a7a7a;">Margine</span>
+                            <field name="margine" widget="monetary" style="font-size: 32px; font-weight:700; margin-left:16px;"/>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_calcolo_margini_kanban" model="ir.ui.view">
+        <field name="name">calcolo.margini.kanban</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="pagamenti_fornitori"/>
+                <field name="buste_paghe"/>
+                <field name="incassi"/>
+                <field name="margine"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div>
+                                    <i class="fa fa-calendar"/> 
+                                    <t t-esc="record.date_from.value"/> - <t t-esc="record.date_to.value"/>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <div><strong>Pagamenti Fornitori:</strong> <field name="pagamenti_fornitori" widget="monetary"/></div>
+                                    <div><strong>Buste Paghe:</strong> <field name="buste_paghe" widget="monetary"/></div>
+                                    <div><strong>Incassi:</strong> <field name="incassi" widget="monetary"/></div>
+                                    <hr/>
+                                    <div style="font-size: 1.2em;">
+                                        <strong>Margine:</strong> 
+                                        <field name="margine" widget="monetary" 
+                                               style="font-weight: bold;"
+                                               t-att-style="record.margine.raw_value &gt; 0 ? 'color: green;' : 'color: red;'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_calcolo_margini_search" model="ir.ui.view">
+        <field name="name">calcolo.margini.search</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <search string="Cerca Margini">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <filter string="Margine Positivo" name="margine_positivo" 
+                        domain="[('margine', '&gt;', 0)]"/>
+                <filter string="Margine Negativo" name="margine_negativo" 
+                        domain="[('margine', '&lt;', 0)]"/>
+                <group expand="0" string="Raggruppa per">
+                    <filter string="Mese" name="group_month" 
+                            context="{'group_by': 'date_from'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph View (Grafico a linee) -->
+    <record id="view_calcolo_margini_graph" model="ir.ui.view">
+        <field name="name">calcolo.margini.graph</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <graph string="Andamento Margini" type="line">
+                <field name="date_from" interval="month"/>
+                <field name="incassi" type="measure"/>
+                <field name="pagamenti_fornitori" type="measure"/>
+                <field name="buste_paghe" type="measure"/>
+                <field name="margine" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot View (Tabella pivot) -->
+    <record id="view_calcolo_margini_pivot" model="ir.ui.view">
+        <field name="name">calcolo.margini.pivot</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <pivot string="Analisi Margini">
+                <field name="date_from" interval="month" type="row"/>
+                <field name="incassi" type="measure"/>
+                <field name="pagamenti_fornitori" type="measure"/>
+                <field name="buste_paghe" type="measure"/>
+                <field name="margine" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Dashboard View (Grafico a barre) -->
+    <record id="view_calcolo_margini_graph_bar" model="ir.ui.view">
+        <field name="name">calcolo.margini.graph.bar</field>
+        <field name="model">calcolo.margini</field>
+        <field name="arch" type="xml">
+            <graph string="Dashboard Margini" type="bar" stacked="0">
+                <field name="date_from" interval="month"/>
+                <field name="incassi" type="measure"/>
+                <field name="pagamenti_fornitori" type="measure"/>
+                <field name="buste_paghe" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_calcolo_margini" model="ir.actions.act_window">
+        <field name="name">Calcolo Margini</field>
+        <field name="res_model">calcolo.margini</field>
+        <field name="view_mode">tree,form,graph,pivot,kanban</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea un nuovo calcolo margini
+            </p>
+            <p>
+                Monitora i margini mensili aziendali calcolando automaticamente:
+                <ul>
+                    <li>Pagamenti ai fornitori</li>
+                    <li>Buste paghe</li>
+                    <li>Incassi da clienti</li>
+                    <li>Margine totale</li>
+                </ul>
+            </p>
+        </field>
+    </record>
+
+</odoo>

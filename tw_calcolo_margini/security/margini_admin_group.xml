@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_margini_admin" model="res.groups">
+        <field name="name">Margini - Amministratore</field>
+        <field name="category_id" ref="tw_calcolo_margini.module_category_margini"/>
+        <field name="implied_ids" eval="[ref('tw_calcolo_margini.group_margini_user')]"/>
+        <field name="users" eval="[]"/>
+    </record>
+</odoo>

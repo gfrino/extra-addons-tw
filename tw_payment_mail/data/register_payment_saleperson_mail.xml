@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+    <record id="register_payment_salesperson_mail_it" model="mail.template">
+        <field name="name">Register Payment Salesperson Mail IT</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_from">{{ user.email or user.company_id.email }}</field>
+            <field name="email_to">{{ object.invoice_user_id.email }}</field>
+            <field name="subject">RE: Accredito da {{user.company_id.name}}</field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Stimato Collaboratore, <br/><br/>
+                        Siamo felici di informarti che abbiamo ricevuto il pagamento da parte di <b><t t-esc="object.partner_id.name or ''"/></b>,<br/><br/>
+                        Per la fattura # <b><t t-esc="object.name or ''"/></b>,<br/><br/>
+                        Ammontare del pagamento di:  <b><t t-esc="object.amount_total"/></b> - <b>CHF</b>.<br/><br/>
+                        Ammontare senza IVA:  <b><t t-esc="object.amount_untaxed"/></b> - <b>CHF</b>.<br/><br/>
+                        Valore della commissione accreditata di:  <b><t t-esc="round(object.commission_total,2)"/></b> - <b>CHF</b>.<br/><br/>
+                        Questa commissione ti verrà pagata a fine mese insieme alle altre!<br/><br/>
+                        Grazie per l'ottimo lavoro! Continua così!<br/><br/>
+                        Cordialmente,<br/><br/>
+                        il team ticinoWEB
+                    </p>
+                </div>
+    	</field>
+    	
+<!--        <field name="report_template_ids" eval="[(4, ref('account.account_invoices_without_payment'))]"/>-->
+<!--        <field name="report_name">Customer Invoice</field>-->
+    </record>
+    
+
+<!--    <record id="register_payment_salesperson_mail_de" model="mail.template">-->
+<!--        <field name="name">Register Payment Sales Person Mail DE</field>-->
+<!--        <field name="model_id" ref="account.model_account_move"/>-->
+<!--        <field name="auto_delete" eval="False"/>-->
+<!--        <field name="email_from">${ctx['email_from']}</field>-->
+<!--        <field name="email_to">${ctx['email_to']}</field>-->
+<!--        <field name="subject">Gutschrift durch ${ctx['company_name']}</field>-->
+<!--        <field name="lang">${ctx['lang']}</field>-->
+<!--        <field name="body_html">-->
+<!--            <![CDATA[-->
+<!--            <div>-->
+
+<!--            	<p> Geschätzte Mitarbeiterin,</b>,<br/>    -->
+<!--                        -->
+<!--                <p> Wir freuen uns, Ihnen mitteilen zu können, dass wir die Zahlung von SWISS INSIGHTS erhalten haben <b>${ctx['customer_name']}</b> </p> <br/>  -->
+<!--                        -->
+<!--                <p> Für Rechnung #<b>${ctx['invoice_no']}</b> </p> <br/> -->
+<!--                -->
+<!--                <p> Zahlungsbetrag von: <b>${ctx['amount_total']}</b> - CHF </p> <br/> -->
+<!--                -->
+<!--                <p> Wert der gutgeschriebenen Provision von: <b>${ctx['commission_total']}</b>- CHF <b>${ctx['commission_name']}</b></p> <br/> -->
+<!--                        -->
+<!--                <p> Diese Provision wird Ihnen am Ende des Monats zusammen mit den anderen Beträgen ausgezahlt. </p> <br/> -->
+<!--                        -->
+<!--                <p> Vielen Dank für Ihre gute Arbeit! Setzen Sie Ihre gute Arbeit fort! </p> <br/> -->
+<!--                        -->
+<!--                        -->
+<!--                <p> Herzlichst, </p> <br/>  -->
+<!--                -->
+<!--                Das <b>${ctx['company_name']}-Team</b>         -->
+<!--            	-->
+<!--            </div>-->
+<!--            ]]>-->
+<!--    	</field>-->
+<!--    	<field name="report_template" ref="tw_payment_mail.account_invoices_custom"/>-->
+<!--        <field name="report_name">Fattura</field>-->
+<!--    </record>-->
+    
+    </data>
+</odoo>

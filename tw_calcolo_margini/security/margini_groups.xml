@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_margini_user" model="res.groups">
+        <field name="name">Margini - Utenti abilitati</field>
+        <field name="category_id" ref="tw_calcolo_margini.module_category_margini"/>
+        <field name="implied_ids" eval="[]"/>
+        <field name="users" eval="[]"/>
+    </record>
+</odoo>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Custom Invoice Document Template -->
+    <template id="report_invoice_document_tw" inherit_id="account.report_invoice_document">
+        
+        <!-- Add custom header with logo -->
+        <xpath expr="//t[@t-set='address']" position="after">
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-6">
+                    <div style="font-size: 10pt;">
+                        <strong t-field="o.company_id.name"/>
+                        <br/>
+                        <span t-field="o.company_id.street"/>
+                        <br/>
+                        <span t-field="o.company_id.zip"/> <span t-field="o.company_id.city"/>
+                    </div>
+                </div>
+                <div class="col-6 text-end">
+                    <img t-if="o.company_id.logo" 
+                         t-att-src="image_data_uri(o.company_id.logo)" 
+                         style="max-height: 80px;" 
+                         alt="Logo"/>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Style invoice header -->
+        <xpath expr="//h2[@class='mt-4']" position="attributes">
+            <attribute name="style">color: #6f42c1; font-weight: 700;</attribute>
+        </xpath>
+
+        <!-- Style table header -->
+        <xpath expr="//table[@name='invoice_line_table']/thead" position="attributes">
+            <attribute name="style">background-color: #6f42c1; color: white;</attribute>
+        </xpath>
+
+        <!-- Remove red border from page number - just hide it with CSS -->
+        <xpath expr="//div[@id='total']" position="attributes">
+            <attribute name="style">/* Custom styles */</attribute>
+        </xpath>
+
+        <!-- Add custom footer with payment info -->
+        <xpath expr="//div[@id='total']" position="after">
+            <div class="row mt-5" style="border-top: 2px solid #6f42c1; padding-top: 20px;">
+                <div class="col-6">
+                    <div style="font-size: 9pt;">
+                        <strong>Informazioni bancarie:</strong><br/>
+                        <span t-if="o.company_id.partner_id.bank_ids">
+                            <t t-foreach="o.company_id.partner_id.bank_ids[:1]" t-as="bank">
+                                <span t-field="bank.bank_name"/><br/>
+                                IBAN: <span t-field="bank.acc_number"/><br/>
+                            </t>
+                        </span>
+                        <br/>
+                        <strong>Partita IVA:</strong> <span t-field="o.company_id.vat"/><br/>
+                        <strong>Web:</strong> <span t-field="o.company_id.website"/><br/>
+                        <strong>Email:</strong> <span t-field="o.company_id.email"/>
+                    </div>
+                </div>
+                <div class="col-6 text-end">
+                    <div style="font-size: 9pt;">
+                        <t t-if="o.invoice_payment_term_id">
+                            <strong>Termini di pagamento:</strong><br/>
+                            <span t-field="o.invoice_payment_term_id.name"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Override QR Bill Report to use correct paper format -->
+    <record id="l10n_ch.account_invoices_qr" model="ir.actions.report">
+        <field name="paperformat_id" ref="l10n_ch.paperformat_ch_qr"/>
+    </record>
+
+    <!-- Custom QR Bill Template - Remove footer -->
+    <template id="report_payment_qr_code_tw" inherit_id="l10n_ch.qr_report_main">
+        
+        <!-- Remove the footer from QR Bill -->
+        <xpath expr="//div[hasclass('footer')]" position="replace"/>
+        
+        <!-- Add header to QR Bill page -->
+        <xpath expr="//div[@id='qr_code_template']" position="before">
+            <div class="row" style="margin-bottom: 20px; padding: 20px; background-color: #f8f9fa;">
+                <div class="col-6">
+                    <strong style="font-size: 12pt;" t-field="o.company_id.name"/>
+                    <div style="font-size: 10pt;" t-field="o.company_id.partner_id" 
+                         t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                </div>
+                <div class="col-6 text-end">
+                    <img t-if="o.company_id.logo" 
+                         t-att-src="image_data_uri(o.company_id.logo)" 
+                         style="max-height: 60px;" 
+                         alt="Company Logo"/>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h3 style="color: #6f42c1;">Sezione pagamento</h3>
+                    <p style="font-size: 10pt;">
+                        Scannerizza il codice QR con la tua app bancaria per effettuare il pagamento.
+                    </p>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Style QR code container -->
+        <xpath expr="//div[@class='qr-bill-container']" position="attributes">
+            <attribute name="style">border: 2px solid #6f42c1; padding: 20px; border-radius: 10px; background-color: #ffffff;</attribute>
+        </xpath>
+
+        <!-- Enhance receipt section -->
+        <xpath expr="//div[@id='qr_receipt']" position="attributes">
+            <attribute name="style">border-right: 1px dashed #6f42c1; padding-right: 20px;</attribute>
+        </xpath>
+
+        <!-- Add payment info footer -->
+        <xpath expr="//div[@id='qr_code_template']" position="after">
+            <div class="row mt-4" style="border-top: 1px solid #dee2e6; padding-top: 15px;">
+                <div class="col-12 text-center">
+                    <p style="font-size: 9pt; color: #6c757d;">
+                        <strong t-field="o.company_id.name"/> - 
+                        <span t-field="o.company_id.website"/> - 
+                        <span t-field="o.company_id.email"/>
+                    </p>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

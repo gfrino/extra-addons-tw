@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu sequence updates are handled by the post_init_hook in hooks.py -->
+    <!-- This ensures compatibility regardless of the actual menu XML IDs -->
+</odoo>
