@@ -11,7 +11,7 @@
     'author': "ticinoWEB",
     'website': "http://www.ticinoweb.com",
     'category': 'Accounting/Accounting',
-    'version': '17.0.17.6',
+    'version': '17.0.17.7',
     "license": "AGPL-3",
 
     # any module necessary for this one to work correctly

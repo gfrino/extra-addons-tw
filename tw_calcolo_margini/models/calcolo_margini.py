@@ -234,14 +234,14 @@ class CalcoloMargini(models.Model):
             ('is_internal_transfer', '=', False),
         ]
         
-        # Aggiungi filtro per conti se configurato
+        # Escludi i registri configurati (trasferimenti interni da escludere)
         params = self.env['ir.config_parameter'].sudo()
-        account_ids_str = params.get_param('tw_calcolo_margini.margini_account_ids', default='')
-        if account_ids_str:
+        excluded_journal_ids_str = params.get_param('tw_calcolo_margini.excluded_journal_ids', default='')
+        if excluded_journal_ids_str:
             try:
-                account_ids = [int(id) for id in account_ids_str.split(',') if id]
-                if account_ids:
-                    payment_domain.append(('destination_account_id', 'in', account_ids))
+                excluded_journal_ids = [int(id) for id in excluded_journal_ids_str.split(',') if id.strip()]
+                if excluded_journal_ids:
+                    payment_domain.append(('journal_id', 'not in', excluded_journal_ids))
             except:
                 pass
         

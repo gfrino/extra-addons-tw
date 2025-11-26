@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="auto_send_invoice_mail_tocustomer" model="ir.cron">
+            <field name="name">Auto Send Invoice Email To Customer Cron</field>
+            <field name="model_id" ref="tw_payment_mail.model_account_move"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.send_customer_invoice_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:59:59')" />
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

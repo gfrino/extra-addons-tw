@@ -83,39 +83,9 @@
 					<field name="move_category_id" widget="many2many_tags"
 						options="{'color_field': 'color', 'no_create_edit': True}"
 						placeholder="Tags..." />
-				</xpath>
-			</field>
-		</record>
-
-		<record id="view_account_move_form_inhertied"
-			model="ir.ui.view">
-			<field name="name">view.account.move.inherit</field>
-			<field name="model">account.move</field>
-			<field name="inherit_id" ref="account.view_move_form" />
-			<field name="arch" type="xml">
-				<xpath expr="//field[@name='ref']" position="before">
-					<field name="category_id" widget="many2many_tags"
-						options="{'color_field': 'color', 'no_create_edit': True}"
-						placeholder="Tags..." />
-				</xpath>
-			</field>
-		</record>
-
-		<record id="view_account_move_tree_inhertied"
-			model="ir.ui.view">
-			<field name="name">view.account.move.tree.inherit</field>
-			<field name="model">account.move</field>
-			<field name="inherit_id" ref="account.view_invoice_tree" />
-			<field name="arch" type="xml">
-				<xpath expr="//field[@name='invoice_origin']" position="after">
-					<field name="category_id" widget="many2many_tags"
-						options="{'color_field': 'color', 'no_create_edit': True}"
-						placeholder="Tags..." />
-				</xpath>
-			</field>
-		</record>
-
-		<record id="view_account_invoice_filter_inherited" model="ir.ui.view">
+		</xpath>
+		</field>
+	</record>		<record id="view_account_invoice_filter_inherited" model="ir.ui.view">
 			<field name="name">account.invoice.select.inherit</field>
 			<field name="model">account.move</field>
 			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
