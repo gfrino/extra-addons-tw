@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Custom External Layout - Complete Control -->
+    <template id="external_layout_tw_custom" name="TW Custom Layout">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-4">
+                    <img t-if="company.logo" 
+                         t-att-src="image_data_uri(company.logo)" 
+                         style="max-height: 80px;" 
+                         alt="Logo"/>
+                </div>
+                <div class="col-8 text-end">
+                    <div style="font-size: 9pt; color: #6c757d; margin-top: 20px; margin-left: 20px;">
+                        <span t-field="company.name"/><br/>
+                        <span t-field="company.street"/><br/>
+                        <span t-field="company.zip"/> <span t-field="company.city"/> <span t-if="company.country_id" t-field="company.country_id.code"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" 
+             style="font-size: 12px;"
+             t-att-data-oe-model="o and o._name" 
+             t-att-data-oe-id="o and o.id" 
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-out="0"/>
+        </div>
+
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout" style="border-top: 1px solid #dee2e6; padding-top: 10px;">
+            <div class="row" style="font-size: 12px; color: #6c757d;">
+                <div class="col-4">
+                    <span t-field="company.report_footer" style="font-size: 12px;"/>
+                </div>
+                <div class="col-4">
+                    <!-- Empty middle column -->
+                </div>
+                <div class="col-4 text-end">
+                    <span t-if="company.phone" style="font-size: 12px;">
+                        Tel: <span t-field="company.phone"/>
+                    </span>
+                    <br t-if="company.phone and company.email"/>
+                    <span t-if="company.email" style="font-size: 12px;">
+                        ticinoweb.com | <span t-field="company.email"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Make invoice use the custom layout -->
+    <template id="report_invoice_document_custom_tw" inherit_id="account.report_invoice_document">
+        
+        <!-- Change invoice title color to blue -->
+        <xpath expr="//h2" position="attributes">
+            <attribute name="style">color: #0066cc;</attribute>
+        </xpath>
+        
+        <!-- Remove indent from customer address -->
+        <xpath expr="//div[@class='offset-col-6 col-6']" position="attributes">
+            <attribute name="class">col-6</attribute>
+        </xpath>
+
+        <!-- Make informations section gray and smaller -->
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="style">font-size: 10px; color: #6c757d;</attribute>
+        </xpath>
+    </template>
+
+</odoo>

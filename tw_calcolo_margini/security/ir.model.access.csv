@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_calcolo_margini_user,access.calcolo.margini.user,model_calcolo_margini,base.group_user,1,1,1,1
+access_calcolo_margini_manager,access.calcolo.margini.manager,model_calcolo_margini,account.group_account_manager,1,1,1,1

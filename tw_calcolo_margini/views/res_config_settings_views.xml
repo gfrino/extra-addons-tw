@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Configurazione Impostazioni -->
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.margini</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Calcolo Margini" name="tw_calcolo_margini" groups="tw_calcolo_margini.group_margini_admin">
+                    <block title="Trasferimenti Interni">
+                        <setting string="Registri da escludere" help="Registri da escludere nel conteggio dei trasferimenti interni. I trasferimenti da questi registri verso altri registri non verranno conteggiati nel calcolo dei pagamenti.">
+                            <field name="margini_excluded_journal_ids" 
+                                   widget="many2many_tags" 
+                                   placeholder="Seleziona registri da escludere..."
+                                   domain="[('type', 'in', ['bank', 'cash'])]"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

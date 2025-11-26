@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="register_payment_customer_mail_us_1" model="mail.template">
+        <field name="name">Register Payment Customer Mail US</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_from">{{ user.email or user.company_id.email }}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
+            <field name="subject">Payment confirmation for invoice {{user.company_id.name}} # {{object.name}}</field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear <b><t t-esc="object.partner_id.name or ''"/></b>,<br/><br/>
+                        We thank you for the payment received today for invoice <b><t t-esc="user.company_id.name"/></b> # <b><t t-esc="object.name"/></b>.<br/><br/>
+                        Thank you for your trust!
+                        <br/><br/>
+                        Best regards,
+                        <br/>
+                        The team ticinoWEB
+                    </p>
+                </div>
+    	</field>
+    	
+        <field name="report_template_ids" eval="[(4, ref('account.account_invoices_without_payment'))]"/>
+<!--        <field name="report_name">Customer Invoice</field>-->
+    </record>
+    
+    
+    
+    
+   <!-- <record id="register_payment_customer_mail_it_1" model="mail.template">
+        <field name="name">Register Payment Customer Mail IT</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="email_from">${ctx['email_from']}</field>
+        <field name="email_to">${ctx['email_to']}</field>
+        <field name="subject">Conferma di pagamento per Fattura ${ctx['company_name']} # ${ctx['invoice_no']},</field>
+        <field name="lang">${ctx['lang']}</field>
+        <field name="body_html">
+            <![CDATA[
+            <div>
+            	<p> Spett.le <b>${ctx['customer_name']}</b>,<br/>    
+                        
+                <p> La ringraziamo per il saldo della fattura <b>${ctx['company_name']} # ${ctx['invoice_no']}</b> </p> <br/>  
+                        
+                <p> Grazie per la sua fiducia. </p> <br/> 
+                        
+                <p> Cordialmente, </p> <br/> 
+                        
+                il team <b>${ctx['company_name']}</b>
+            	
+            </div>
+            ]]>
+    	</field>
+    	<field name="report_template" ref="tw_payment_mail.account_invoices_custom"/>
+        <field name="report_name">Fattura</field>
+    </record>-->
+    
+    
+    
+
+<!--    -->
+<!--    -->
+<!--    <record id="register_payment_customer_mail_de" model="mail.template">-->
+<!--        <field name="name">Register Payment Customer Mail DE</field>-->
+<!--        <field name="model_id" ref="account.model_account_move"/>-->
+<!--        <field name="auto_delete" eval="False"/>-->
+<!--        <field name="email_from">${ctx['email_from']}</field>-->
+<!--        <field name="email_to">${ctx['email_to']}</field>-->
+<!--        <field name="subject">Zahlungsbestätigung für Rechnung ${ctx['company_name']} # ${ctx['invoice_no']},</field>-->
+<!--        <field name="lang">${ctx['lang']}</field>-->
+<!--        <field name="body_html">-->
+<!--            <![CDATA[-->
+<!--            <div>-->
+<!--            	<p> Liebe <b>${ctx['customer_name']}</b>,<br/>    -->
+<!--                         -->
+<!--                <p> Wir danken Ihnen für die Begleichung der Rechnung <b>${ctx['company_name']} # ${ctx['invoice_no']}</b> </p> <br/>  -->
+<!--                        -->
+<!--                <p> Wir danken Ihnen für die Begleichung der Rechnung! </p> <br/> -->
+<!--                        -->
+<!--                <p> Herzlichst, </p> <br/> -->
+<!--                        -->
+<!--                Das <b>${ctx['company_name']}-Team</b>-->
+<!--            	-->
+<!--            </div>-->
+<!--            ]]>-->
+<!--    	</field>-->
+<!--    	-->
+<!--    	<field name="report_template" ref="tw_payment_mail.account_invoices_custom"/>-->
+<!--        <field name="report_name">Customer Invoice</field>-->
+<!--    </record>-->
+<!--    -->
+
+    
+    
+</odoo>

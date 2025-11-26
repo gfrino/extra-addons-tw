@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_margini" model="ir.ui.view">
+        <field name="name">res.users.form.margini</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <page name="preferences" position="after">
+                <page string="Calcolo Margini" name="margini_access">
+                    <group>
+                        <group string="Accesso Modulo">
+                            <field name="margini_access_level"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

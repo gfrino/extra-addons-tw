@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+		<record id="view_account_move_form_inherited_create" model="ir.ui.view">
+			<field name="name">view.account.move.inherit</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='invoice_date']" position="after">
+					<field name="create_date" readonly="0" force_save="1"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>
