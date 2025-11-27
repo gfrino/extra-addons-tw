@@ -48,22 +48,19 @@ class AccountPaymentRegister(models.TransientModel):
 
         # Get configured hosting categories
         get_param = self.env['ir.config_parameter'].sudo().get_param
-        category_ids_str = get_param('tw_auto_hosting_invoice.category_ids')
-        if not category_ids_str:
+        tw_category_ids_str = get_param('tw_auto_hosting_invoice.tw_category_ids')
+        if not tw_category_ids_str:
             return False
         
         try:
-            category_ids = literal_eval(category_ids_str)
+            tw_category_ids = literal_eval(tw_category_ids_str)
         except (ValueError, SyntaxError):
-            _logger.warning('Invalid category_ids configuration: %s', category_ids_str)
             return False
 
         # Check if any line has a hosting product
         for line in self.custom_invoice_id.invoice_line_ids:
             if (line.product_id and line.product_id.categ_id and 
-                line.product_id.categ_id.id in category_ids):
-                _logger.info('Hosting product found in invoice %s, category: %s',
-                           self.custom_invoice_id.name, line.product_id.categ_id.name)
+                line.product_id.categ_id.id in tw_category_ids):
                 return {
                     'name': _('Auto Hosting Invoice'),
                     'view_mode': 'form',

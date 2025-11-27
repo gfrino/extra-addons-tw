@@ -15,15 +15,13 @@ class AccountPayment(models.Model):
         res = super(AccountPayment, self).action_post()
         if self.custom_invoice_id and self.custom_invoice_id.move_type == 'out_invoice':
             get_param = self.env['ir.config_parameter'].sudo().get_param
-            category_ids = literal_eval(get_param('tw_auto_hosting_invoice.category_ids')) if get_param(
-                'tw_auto_hosting_invoice.category_ids') else False
+            tw_category_ids = literal_eval(get_param('tw_auto_hosting_invoice.tw_category_ids')) if get_param(
+                'tw_auto_hosting_invoice.tw_category_ids') else False
 
             if self.custom_invoice_id.invoice_line_ids:
                 for line in self.custom_invoice_id.invoice_line_ids:
-                    if line.product_id and line.product_id.categ_id.id in category_ids:
-                        print('line product category----', line.product_id.categ_id.name)
+                    if line.product_id and line.product_id.categ_id.id in tw_category_ids:
                         form_id = self.env.ref('tw_auto_hosting_invoice.view_auto_hosting_inv_wizard', False)
-                        print('form_id---------', form_id)
                         return {
                             'name': 'Auto Hosting Form',
                             'view_type': 'form',

@@ -1,3 +1,17 @@
+# [17.0.1.4.0] - 2025-11-27
+
+### Debug & Fix
+- Aggiunti log dettagliati di debug nelle funzioni chiave per facilitare la diagnosi.
+- Verifica e pulizia di tutte le dipendenze e filtri su category_id.
+- Aggiornamento versione modulo.
+
+# 17.0.1.5.0
+- Rimozione di tutte le linee di debug logging dal codice (log [DEBUG tw_auto_hosting_invoice])
+# [17.0.1.3.0] - 2025-11-27
+
+### Changed
+- Refactor: tutti i riferimenti a `category_id`/`category_ids` sono stati sostituiti con `tw_category_id`/`tw_category_ids` per evitare errori e conflitti con altri moduli/account.payment.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

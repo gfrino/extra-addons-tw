@@ -11,7 +11,7 @@
 
                     <block title="Categories for Hosting Invoice" name="project_time" groups="tw_vsd_points_system.vsd_value_amount_config">
                         <setting id="vsd_category_ids" help="Select category where auto hosting invoice will be generated!.">
-                            <field name="category_ids" widget="many2many_tags"/>
+                            <field name="tw_category_ids" widget="many2many_tags"/>
                         </setting>
                     </block>
 
