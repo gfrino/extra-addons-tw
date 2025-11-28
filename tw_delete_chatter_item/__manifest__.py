@@ -24,7 +24,7 @@
     "license": "LGPL-3",
     "author": "ticinoWEB",
     "website": "http://www.ticinoweb.tech",
-    "version": '18.0.1.0.3',
+    "version": '18.0.1.0.4',
     "depends": ['base', 'mail'],
     "images": [
         'static/description/banner.png',
@@ -41,6 +41,8 @@
             'tw_delete_chatter_item/static/src/js/message_delete.js',
         ],
     },
+    "price": 5,
+    "currency": 'EUR',
     "installable": True,
     "application": False,
     "auto_install": False,
