@@ -1,9 +1,18 @@
+# [17.0.1.7.0] - 2025-11-28
+
+### Fixed
+- Corretto il nome del campo da `tw_category_ids` a `tw_category_id` (singolare) per evitare errori "Invalid field" durante la creazione della fattura automatica.
+
 # [17.0.1.4.0] - 2025-11-27
 
 ### Debug & Fix
 - Aggiunti log dettagliati di debug nelle funzioni chiave per facilitare la diagnosi.
 - Verifica e pulizia di tutte le dipendenze e filtri su category_id.
 - Aggiornamento versione modulo.
+
+# 17.0.1.6.0
+### Fixed
+- Ora il campo `tw_category_ids` viene sempre copiato dalla fattura originale quando si genera la nuova fattura automatica.
 
 # 17.0.1.5.0
 - Rimozione di tutte le linee di debug logging dal codice (log [DEBUG tw_auto_hosting_invoice])

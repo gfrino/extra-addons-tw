@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extended tree view for mail.message with delete capability -->
+    <record id="view_mail_message_tree_delete" model="ir.ui.view">
+        <field name="name">mail.message.tree.delete</field>
+        <field name="model">mail.message</field>
+        <field name="arch" type="xml">
+            <tree string="Messages" delete="1">
+                <field name="date"/>
+                <field name="subject"/>
+                <field name="author_id"/>
+                <field name="model"/>
+                <field name="res_id"/>
+                <field name="message_type"/>
+                <field name="email_from"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for mail.message -->
+    <record id="view_mail_message_form_delete" model="ir.ui.view">
+        <field name="name">mail.message.form.delete</field>
+        <field name="model">mail.message</field>
+        <field name="arch" type="xml">
+            <form string="Message">
+                <header>
+                    <button name="unlink" 
+                            string="Delete Message" 
+                            type="object" 
+                            class="btn-danger"
+                            confirm="Are you sure you want to delete this message?"
+                            groups="tw_delete_chatter_item.group_delete_chatter_messages"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="author_id"/>
+                            <field name="email_from"/>
+                            <field name="subject"/>
+                        </group>
+                        <group>
+                            <field name="model"/>
+                            <field name="res_id"/>
+                            <field name="message_type"/>
+                        </group>
+                    </group>
+                    <group string="Content">
+                        <field name="body" widget="html"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to access messages -->
+    <record id="action_mail_message_delete" model="ir.actions.act_window">
+        <field name="name">Delete Chatter Messages</field>
+        <field name="res_model">mail.message</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_mail_message_tree_delete')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_mail_message_form_delete')})]"/>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No messages found
+            </p>
+            <p>
+                This view shows all chatter messages in the system.<br/>
+                You can select and delete messages using the action menu or by opening the message form.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu in Settings > Technical -->
+    <menuitem id="menu_mail_message_delete_technical"
+              name="Delete Chatter Messages"
+              parent="base.menu_email"
+              action="action_mail_message_delete"
+              groups="tw_delete_chatter_item.group_delete_chatter_messages"
+              sequence="10"/>
+
+    <!-- Menu in Discuss -->
+    <menuitem id="menu_mail_message_delete_discuss"
+              name="Delete Messages"
+              parent="mail.menu_root_discuss"
+              action="action_mail_message_delete"
+              groups="tw_delete_chatter_item.group_delete_chatter_messages"
+              sequence="99"/>
+
+</odoo>

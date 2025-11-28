@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Security Group for Deleting Chatter Messages -->
+    <record id="group_delete_chatter_messages" model="res.groups">
+        <field name="name">Delete Chatter Messages</field>
+        <field name="category_id" ref="base.module_category_administration"/>
+        <field name="comment">Users in this group can delete any message from the chatter, regardless of who posted it.</field>
+    </record>
+</odoo>
