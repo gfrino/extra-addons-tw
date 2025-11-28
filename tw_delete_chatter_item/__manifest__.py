@@ -24,7 +24,7 @@
     "license": "LGPL-3",
     "author": "ticinoWEB",
     "website": "http://www.ticinoweb.tech",
-    "version": '17.0.1.0.1',
+    "version": '17.0.1.0.2',
     "depends": ['base', 'mail'],
     "images": [
         'static/description/banner.png',
