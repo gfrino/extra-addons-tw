@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .banner h1 {
+            font-size: 48px;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+        }
+        .banner p {
+            font-size: 24px;
+            margin: 0;
+            opacity: 0.95;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .feature-card h3 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 22px;
+        }
+        .screenshot {
+            margin: 40px 0;
+            text-align: center;
+        }
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .screenshot h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .cta {
+            background: #667eea;
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        .cta h2 {
+            margin-top: 0;
+            font-size: 32px;
+        }
+        .icon-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .icon-item {
+            text-align: center;
+            padding: 20px;
+        }
+        .icon-item svg {
+            width: 64px;
+            height: 64px;
+            fill: #667eea;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <h1>🗑️ Delete Chatter Messages</h1>
+        <p>Complete control over your Odoo chatter discussions</p>
+    </div>
+
+    <section>
+        <h2 style="text-align: center; color: #667eea; font-size: 36px;">Clean Up Your Chatter with Confidence</h2>
+        <p style="text-align: center; font-size: 18px; color: #666; max-width: 800px; margin: 20px auto;">
+            This powerful module allows authorized users to delete any message, note, or activity from the chatter. 
+            Perfect for maintaining clean, professional, and relevant communication threads across your entire Odoo system.
+        </p>
+    </section>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>🔐 Permission-Based Access</h3>
+            <p>Only authorized users with the "Delete Chatter Messages" group can delete messages. Complete control over who can clean up discussions.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>🌍 Universal Compatibility</h3>
+            <p>Works seamlessly on all models with chatter functionality - invoices, sales orders, projects, contacts, and more.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>📝 Audit Trail</h3>
+            <p>All deletion activities are logged in the system for audit purposes, ensuring accountability and traceability.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>✨ Clean UI Integration</h3>
+            <p>Delete button appears naturally in the chatter interface for authorized users. Non-intrusive and intuitive design.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>⚡ Easy Configuration</h3>
+            <p>Simple setup through user groups. Assign permissions in just a few clicks from the user settings.</p>
+        </div>
+        
+        <div class="feature-card">
+            <h3>🛡️ Data Compliance</h3>
+            <p>Remove sensitive information when required for privacy compliance (GDPR, data protection regulations).</p>
+        </div>
+    </div>
+
+    <div class="screenshot">
+        <h3>Delete Button in Action</h3>
+        <p style="color: #666;">Authorized users will see a delete button on each chatter message</p>
+        <div style="background: #f8f9fa; padding: 40px; border-radius: 8px; margin-top: 20px;">
+            <p style="font-style: italic; color: #999;">Screenshot: Chatter with delete button visible</p>
+        </div>
+    </div>
+
+    <section style="margin: 60px 0;">
+        <h2 style="text-align: center; color: #667eea; font-size: 32px;">Use Cases</h2>
+        <div class="icon-row">
+            <div class="icon-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7h-2z"/></svg>
+                <h4>Data Cleanup</h4>
+                <p>Remove test or outdated messages</p>
+            </div>
+            <div class="icon-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                <h4>Privacy Compliance</h4>
+                <p>Delete sensitive information</p>
+            </div>
+            <div class="icon-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                <h4>Quality Control</h4>
+                <p>Clean up duplicate messages</p>
+            </div>
+            <div class="icon-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                <h4>Professional Threads</h4>
+                <p>Maintain clean discussions</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta">
+        <h2>Ready to Clean Up Your Chatter?</h2>
+        <p style="font-size: 18px; margin: 20px 0;">Install now and take control of your Odoo discussions</p>
+    </div>
+
+    <section style="background: #f8f9fa; padding: 40px; border-radius: 10px; margin: 40px 0;">
+        <h2 style="color: #667eea; text-align: center;">Quick Setup Guide</h2>
+        <ol style="font-size: 18px; line-height: 2; max-width: 800px; margin: 0 auto;">
+            <li>Install the module from Odoo Apps</li>
+            <li>Go to Settings > Users & Companies > Users</li>
+            <li>Select a user and edit their profile</li>
+            <li>Enable "Delete Chatter Messages" group under Access Rights</li>
+            <li>Save and the user can now delete chatter messages!</li>
+        </ol>
+    </section>
+
+    <section style="text-align: center; margin: 60px 0;">
+        <h2 style="color: #667eea;">Technical Information</h2>
+        <p><strong>Version:</strong> 17.0.1.0.1</p>
+        <p><strong>Odoo Version:</strong> 17.0</p>
+        <p><strong>License:</strong> LGPL-3</p>
+        <p><strong>Author:</strong> ticinoWEB</p>
+        <p><strong>Category:</strong> Discuss / Productivity</p>
+    </section>
+
+    <section style="text-align: center; background: #667eea; color: white; padding: 40px; border-radius: 10px;">
+        <h2>Need Support?</h2>
+        <p style="font-size: 18px;">Contact us at info@ticinoweb.com</p>
+        <p>Visit our website: <a href="https://ticinoweb.tech" style="color: white; font-weight: bold;">ticinoweb.tech</a></p>
+    </section>
+</body>
+</html>

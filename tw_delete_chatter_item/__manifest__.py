@@ -26,6 +26,12 @@
     "website": "http://www.ticinoweb.tech",
     "version": '17.0.1.0.1',
     "depends": ['base', 'mail'],
+    "images": [
+        'static/description/banner.png',
+        'static/description/screenshot1.png',
+        'static/description/screenshot2.png',
+        'static/description/screenshot3.png',
+    ],
     "data": [
         'security/security.xml',
         'security/ir.model.access.csv',
