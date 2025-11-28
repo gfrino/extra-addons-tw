@@ -1,6 +1,6 @@
 {
     'name': 'TW Custom Views and Menus',
-    'version': '17.0.1.27.0',
+    'version': '18.0.1.27.0',
     'category': 'Customizations',
     'summary': 'Custom views and menus modifications for TW',
     'description': """

@@ -20,7 +20,7 @@
     "license": 'LGPL-3',
     "author": "ticinoWEB",
     "website": "https://ticinoweb.com/",
-    "version": '17.0.1.7.0',
+    "version": '18.0.1.7.0',
     "depends": ['account', 'base', 'hr'],
     "data": [
         "security/ir.model.access.csv",

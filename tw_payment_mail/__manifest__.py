@@ -10,7 +10,7 @@
     "sequence": 1,
     "author": "ticinoWEB",
     "website": "http://www.ticinoweb.com/",
-    "version": '13.3',
+    "version": '18.0.1.0',
     "depends": ['base', 'account'],
     "data": [
         # "security/ir.model.access.csv",

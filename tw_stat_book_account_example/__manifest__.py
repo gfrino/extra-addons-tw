@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'TW Stat Book - Account Integration Example',
-    'version': '1.1',
+    'version': '18.0.1.1',
     'category': 'Statistics',
     'summary': 'Esempio di integrazione Stat Book con modulo Account',
     'description': """
