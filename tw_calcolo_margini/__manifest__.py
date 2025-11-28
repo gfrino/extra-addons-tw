@@ -1,6 +1,6 @@
 {
     'name': 'TW Calcolo Margini',
-    'version': '18.0.1.9.0',
+    'version': '18.0.1.9.1',
     'category': 'Accounting',
     'summary': 'Calcolo margini mensili aziendali con statistiche',
     'description': """
@@ -32,6 +32,8 @@
         'views/menu_views.xml',
         'views/res_users_views.xml',
     ],
+    'price': 1250,
+    'currency': 'EUR',
     'installable': True,
     'application': True,
     'auto_install': False,
