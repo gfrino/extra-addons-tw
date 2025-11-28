@@ -1,6 +1,6 @@
 {
     'name': 'TW Calcolo Margini',
-    'version': '18.0.1.9.2',
+    'version': '18.0.1.9.3',
     'category': 'Accounting',
     'summary': 'Calcolo margini mensili aziendali con statistiche',
     'description': """
