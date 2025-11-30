@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stat_book_add_chart_wizard_form" model="ir.ui.view">
+        <field name="name">stat.book.add.chart.wizard.form</field>
+        <field name="model">stat.book.add.chart.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Nuovo Grafico">
+                <field name="state" invisible="1"/>
+                <sheet>
+                    <group>
+                        <group invisible="state != 'select_app'">
+                            <div style="font-weight: bold; margin-bottom: 8px;">Seleziona un'app</div>
+                            <div class="o_stat_book_app_grid">
+                                <button type="object" name="action_next_step" context="{'app_force':'account.move'}" string="Fatturazione" class="oe_highlight"/>
+                                <button type="object" name="action_next_step" context="{'app_force':'sale.order'}" string="Vendite"/>
+                                <button type="object" name="action_next_step" context="{'app_force':'crm.lead'}" string="CRM"/>
+                                <button type="object" name="action_next_step" context="{'app_force':'purchase.order'}" string="Acquisti"/>
+                                <button type="object" name="action_next_step" context="{'app_force':'stock.picking'}" string="Magazzino"/>
+                                <button type="object" name="action_next_step" context="{'app_force':'project.task'}" string="Progetti"/>
+                            </div>
+                        </group>
+                        <group invisible="state != 'configure'">
+                            <field name="name"/>
+                            <field name="model_name" readonly="1"/>
+                            <field name="group_by_period" widget="radio"/>
+                            <field name="filter_selection" widget="radio"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <field name="domain" invisible="1"/>
+                    <field name="context" invisible="1"/>
+                </sheet>
+                <footer invisible="state != 'configure'">
+                    <button name="action_add_chart" type="object" string="Salva" class="btn btn-primary"/>
+                    <button string="Chiudi" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

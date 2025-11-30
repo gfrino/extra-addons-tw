@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stat_book_chart_search" model="ir.ui.view">
+        <field name="name">stat.book.chart.search</field>
+        <field name="model">stat.book.chart</field>
+        <field name="arch" type="xml">
+            <search string="Grafici">
+                <field name="name"/>
+                <field name="model_name"/>
+                <filter string="Attivi" name="active" domain="[( 'active','=', True)]"/>
+                <group expand="0" string="Raggruppa">
+                    <filter string="Modello" name="group_model" context="{'group_by':'model_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stat_book_dashboard" model="ir.actions.act_window">
+        <field name="name">I Tuoi Grafici</field>
+        <field name="res_model">stat.book.chart</field>
+        <field name="view_mode">tree</field>
+        <field name="views" eval="[(ref('tw_stat_book.view_stat_book_chart_tree'),'tree')]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Stat Book è vuoto</p>
+            <p><a type="action" name="%(action_open_add_chart_wizard)d" class="btn btn-primary">➕ Aggiungi Grafico</a></p>
+        </field>
+    </record>
+
+    <record id="action_open_add_chart_wizard" model="ir.actions.act_window">
+        <field name="name">Aggiungi Grafico</field>
+        <field name="res_model">stat.book.add.chart.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_stat_book_chart"/>
+        <field name="binding_view_types">tree</field>
+        <field name="binding_type">action</field>
+    </record>
+
+    <record id="view_stat_book_chart_tree" model="ir.ui.view">
+        <field name="name">stat.book.chart.tree</field>
+        <field name="model">stat.book.chart</field>
+        <field name="arch" type="xml">
+            <tree string="Grafici" create="false">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="action_id"/>
+                <field name="active" widget="toggle"/>
+                <button name="action_open_chart" type="object" string="Apri" icon="fa-external-link"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stat_book_chart_form" model="ir.ui.view">
+        <field name="name">stat.book.chart.form</field>
+        <field name="model">stat.book.chart</field>
+        <field name="arch" type="xml">
+            <form string="Grafico Stat Book">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="model_name"/>
+                            <field name="action_id"/>
+                        </group>
+                        <group string="Configurazione">
+                            <field name="domain" widget="ace" options="{'mode': 'python'}"/>
+                            <field name="context" widget="ace" options="{'mode': 'python'}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

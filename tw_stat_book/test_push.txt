@@ -1,1 +1,6 @@
-# Modifica di test
+
+# Aggiorna il modulo tw_stat_book
+service odoo stop
+odoo -u tw_stat_book --stop-after-init -d Production -c /etc/odoo/odoo.conf 
+service odoo start
+
