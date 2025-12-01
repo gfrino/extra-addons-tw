@@ -14,10 +14,10 @@ class AccountMove(models.Model):
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
-        self.category_id = self.partner_id.move_category_id
+        self.tw_category_id = self.partner_id.move_category_id
         return super(AccountMove, self)._onchange_partner_id()
 
-    category_id = fields.Many2many('account.move.category', column1='move_id',
+    tw_category_id = fields.Many2many('account.move.category', column1='move_id',
                                     column2='category_id', string='Internal Reference')
 
 
@@ -60,8 +60,8 @@ class AccountPayment(models.Model):
         invoices = self.env['account.move'].browse(active_ids).filtered(lambda move: move.is_invoice(include_receipts=True))
 
         rec.update({
-            'category_id': [(6, 0, invoices.category_id.ids)]
-            # 'categ_id': invoices[0].category_id and invoices[0].category_id.ids[0] or False,
+            'tw_category_id': [(6, 0, invoices.tw_category_id.ids)]
+            # 'categ_id': invoices[0].tw_category_id and invoices[0].tw_category_id.ids[0] or False,
         })
         return rec
 
@@ -76,7 +76,7 @@ class AccountPayment(models.Model):
                     inv_untax_amt = rec.amount
             rec.inv_untax_amt = inv_untax_amt
 
-    category_id = fields.Many2many('account.move.category', column1='payment_id',
+    tw_category_id = fields.Many2many('account.move.category', column1='payment_id',
                                     column2='category_id', string='Tags')
     # inv_untax_amt = fields.Float(string='Untaxed Amount', compute='compute_inv_untax_amt')
 
@@ -88,7 +88,7 @@ class AccountPaymentRegister(models.TransientModel):
     # company_cur_tax_exc = fields.Float(compute="_compute_company_cur_total", string="Tax Excluded")
     # company_currency_id = fields.Many2one(string='Company Currency', readonly=True,
     #                                       related='company_id.currency_id')
-    category_id = fields.Many2many('account.move.category', column1='payment_id',
+    tw_category_id = fields.Many2many('account.move.category', column1='payment_id',
                                    column2='category_id', string='Tags')
     # inv_untax_amt = fields.Float(string='Untaxed Amount', compute='compute_inv_untax_amt')
 
@@ -125,8 +125,8 @@ class AccountPaymentRegister(models.TransientModel):
         print("Hhhhhhhhhhhh",lines, self._context)
         if lines:
             rec.update({
-                'category_id': [(6, 0, lines[0].move_id.category_id.ids)]
-                # 'categ_id': invoices[0].category_id and invoices[0].category_id.ids[0] or False,
+                'tw_category_id': [(6, 0, lines[0].move_id.tw_category_id.ids)]
+                # 'categ_id': invoices[0].tw_category_id and invoices[0].tw_category_id.ids[0] or False,
             })
         return rec
 
@@ -160,8 +160,8 @@ class AccountPaymentRegister(models.TransientModel):
 
     def _create_payments(self):
         vals = super()._create_payments()
-        if self.category_id:
-            vals.category_id = self.category_id.ids
+        if self.tw_category_id:
+            vals.tw_category_id = self.tw_category_id.ids
         return vals
 
 

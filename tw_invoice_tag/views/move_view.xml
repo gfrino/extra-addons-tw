@@ -30,7 +30,7 @@
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='payment_method_line_id']"
 					position="after">
-					<field name="category_id" widget="many2many_tags"
+					<field name="tw_category_id" widget="many2many_tags"
 						options="{'color_field': 'color', 'no_create_edit': True}"
 						placeholder="Tags..." />
 					<!--<field name="inv_untax_amt" invisible="1" />-->
@@ -46,7 +46,7 @@
 				ref="account.view_account_payment_tree" />
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='partner_id']" position="after">
-					<field name="category_id" widget="many2many_tags" optional="hide"
+					<field name="tw_category_id" widget="many2many_tags" optional="hide"
 						options="{'color_field': 'color', 'no_create_edit': True}"
 						placeholder="Tags..." />
 					<!--<field name="inv_untax_amt" sum="inv_untax_amt" />-->
@@ -68,8 +68,8 @@
 			<field name="inherit_id" ref="account.view_account_payment_search"/>
 			<field name="arch" type="xml">
 				<xpath expr="//search" position="inside">
-					<filter string="Riferimento interno" name="category_id" context="{'group_by': 'category_id'}"/>
-					<field name="category_id"/>
+					<filter string="Riferimento interno" name="tw_category_id" context="{'group_by': 'tw_category_id'}"/>
+					<field name="tw_category_id"/>
 				</xpath>
 			</field>
 		</record>
@@ -91,8 +91,8 @@
 			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
 			<field name="arch" type="xml">
 				<xpath expr="//search" position="inside">
-					<filter string="Riferimento interno" name="category_id" context="{'group_by': 'category_id'}"/>
-					<field name="category_id"/>
+					<filter string="Riferimento interno" name="tw_category_id" context="{'group_by': 'tw_category_id'}"/>
+					<field name="tw_category_id"/>
 				</xpath>
 			</field>
 		</record>

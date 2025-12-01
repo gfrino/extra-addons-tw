@@ -92,9 +92,6 @@ class AutoHostingInvoiceWizard(models.TransientModel):
             vals['fiscal_position_id'] = self.invoice_id.fiscal_position_id.id
         if self.invoice_id.partner_bank_id:
             vals['partner_bank_id'] = self.invoice_id.partner_bank_id.id
-        # Copia sempre il campo tw_category_id dalla fattura originale (anche se vuoto)
-        if hasattr(self.invoice_id, 'tw_category_id'):
-            vals['tw_category_id'] = [(6, 0, self.invoice_id.tw_category_id.ids)]
         
         # Create the new invoice
         move = self.env['account.move'].create(vals)
