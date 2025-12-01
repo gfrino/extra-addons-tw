@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extend project.task MAIN tree view -->
+    <record id="tw_project_task_tree_vsd_inherit" model="ir.ui.view">
+        <field name="name">tw.project.task.tree.vsd.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree" position="inside">
+                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="task_service_type_id" optional="show"/>
+                <field name="vsd_status" optional="show"/>
+            </xpath>
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!-- Extend ALL TASKS list -->
+    <record id="tw_task_tree_all_vsd_inherit" model="ir.ui.view">
+        <field name="name">tw.task.tree.all.vsd.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.open_view_all_tasks_list_view"/>
+        <field name="priority" eval="110"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree" position="inside">
+                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="task_service_type_id" optional="show"/>
+                <field name="vsd_status" optional="show"/>
+            </xpath>
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!-- Extend MY TASKS list -->
+    <record id="tw_task_tree_my_vsd_inherit" model="ir.ui.view">
+        <field name="name">tw.task.tree.my.vsd.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.open_view_my_tasks_list_view"/>
+        <field name="priority" eval="110"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree" position="inside">
+                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="task_service_type_id" optional="show"/>
+                <field name="vsd_status" optional="show"/>
+            </xpath>
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

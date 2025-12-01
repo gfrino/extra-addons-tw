@@ -1,6 +1,6 @@
 {
     'name': 'TW Custom Views and Menus',
-    'version': '17.0.1.28.0',
+    'version': '17.0.1.29.0',
     'category': 'Customizations',
     'summary': 'Custom views and menus modifications specific for ticinoWEB internal odoo',
     'description': """
@@ -29,7 +29,7 @@
     'data': [
         'views/menu_views.xml',
         'views/account_move_views.xml',
-        'views/project_task_views.xml',
+        'views/project_task_views_vsd_tree.xml',
         'report/invoice_report_simple.xml',
     ],
     'post_init_hook': 'post_init_hook',
