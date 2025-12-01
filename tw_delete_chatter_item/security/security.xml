@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Security Category -->
+    <record id="module_category_chatter_delete" model="ir.module.category">
+        <field name="name">Chatter Messages</field>
+        <field name="description">Delete Chatter Messages</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- Security Group -->
+    <record id="group_delete_chatter" model="res.groups">
+        <field name="name">Delete Chatter Messages</field>
+        <field name="category_id" ref="module_category_chatter_delete"/>
+        <field name="comment">Users in this group can delete any message from the chatter</field>
+    </record>
+</odoo>
