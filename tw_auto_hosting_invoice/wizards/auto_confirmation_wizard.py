@@ -23,8 +23,8 @@ class AutoHostingInvoiceWizard(models.TransientModel):
         _logger.info('Creating duplicate invoice for %s', self.invoice_id.name)
 
         get_param = self.env['ir.config_parameter'].sudo().get_param
-        category_ids = literal_eval(get_param('tw_auto_hosting_invoice.category_ids')) if get_param(
-            'tw_auto_hosting_invoice.category_ids') else False
+        tw_category_ids = literal_eval(get_param('tw_auto_hosting_invoice.tw_category_ids')) if get_param(
+            'tw_auto_hosting_invoice.tw_category_ids') else False
         # payment_term = self.env['account.payment.term'].search([('name', '=', '15 Days')], order="id desc", limit=1)
         payment_term = self.env['account.payment.term'].browse(2)
 
@@ -40,7 +40,7 @@ class AutoHostingInvoiceWizard(models.TransientModel):
 
             # Include product lines from configured categories
             if line.display_type == 'product':
-                if line.product_id and line.product_id.categ_id.id in category_ids:
+                if line.product_id and line.product_id.categ_id.id in tw_category_ids:
                     # Prepare agent commission data if available
                     agent_vals = []
                     if hasattr(line, 'agent_ids') and line.agent_ids:
@@ -83,6 +83,8 @@ class AutoHostingInvoiceWizard(models.TransientModel):
             'invoice_line_ids': line_vals,
             # Copia l'addetto vendite dalla fattura originale
             'invoice_user_id': self.invoice_id.invoice_user_id.id,
+            # Copia il cash rounding dalla fattura originale
+            'invoice_cash_rounding_id': self.invoice_id.invoice_cash_rounding_id.id if self.invoice_id.invoice_cash_rounding_id else False,
         }
         
         # Add optional fields if present
@@ -90,8 +92,9 @@ class AutoHostingInvoiceWizard(models.TransientModel):
             vals['fiscal_position_id'] = self.invoice_id.fiscal_position_id.id
         if self.invoice_id.partner_bank_id:
             vals['partner_bank_id'] = self.invoice_id.partner_bank_id.id
-        if hasattr(self.invoice_id, 'category_id') and self.invoice_id.category_id:
-            vals['category_id'] = [(6, 0, self.invoice_id.category_id.ids)]
+        # Copia sempre il campo tw_category_id dalla fattura originale (anche se vuoto)
+        if hasattr(self.invoice_id, 'tw_category_id'):
+            vals['tw_category_id'] = [(6, 0, self.invoice_id.tw_category_id.ids)]
         
         # Create the new invoice
         move = self.env['account.move'].create(vals)
