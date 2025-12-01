@@ -1,8 +1,8 @@
 {
     'name': 'TW Custom Views and Menus',
-    'version': '17.0.1.27.0',
+    'version': '17.0.1.28.0',
     'category': 'Customizations',
-    'summary': 'Custom views and menus modifications for TW',
+    'summary': 'Custom views and menus modifications specific for ticinoWEB internal odoo',
     'description': """
         This module contains custom views and menus modifications for TW.
         
@@ -23,10 +23,13 @@
         'account',
         'l10n_ch',
         'spreadsheet_dashboard_oca',
+        'project',
+        'tw_vsd_points_system',
     ],
     'data': [
         'views/menu_views.xml',
         'views/account_move_views.xml',
+        'views/project_task_views.xml',
         'report/invoice_report_simple.xml',
     ],
     'post_init_hook': 'post_init_hook',

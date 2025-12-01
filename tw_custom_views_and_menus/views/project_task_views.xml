@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend project.task tree view to add VSD fields -->
+    <record id="view_all_tasks_tree_vsd" model="ir.ui.view">
+        <field name="name">project.task.tree.vsd</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <!-- Add VSD fields after existing columns -->
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="task_service_type_id" optional="show"/>
+                <field name="vsd_status" optional="show"/>
+            </xpath>
+            
+            <!-- Make tree view editable -->
+            <xpath expr="//tree" position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
