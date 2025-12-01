@@ -2,15 +2,15 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "Commission Mail",
+    "name": "Payment Mail Notification",
     "category": 'Accounts',
-    "summary": 'Auto Send Mail to Customer/Sales Person',
+    "summary": 'Auto Send Mail to Customer/Sales Person once a payment is registered',
     "license": 'LGPL-3', 
     "description": """When Register Payment, Auto Send Email to Customer/Salesperson when payment posted!""",
     "sequence": 1,
     "author": "ticinoWEB",
     "website": "http://www.ticinoweb.com/",
-    "version": '13.3',
+    "version": '17.0.1.0.0',
     "depends": ['base', 'account'],
     "data": [
         # "security/ir.model.access.csv",

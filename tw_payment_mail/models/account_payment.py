@@ -13,26 +13,31 @@ class AccountPayment(models.Model):
         agent_obj = None
 
         res = super(AccountPayment, self).action_post()
-        if self.custom_invoice_id and self.custom_invoice_id.move_type == 'out_invoice':
+        # In Odoo 17, reconciled_invoice_ids replaces invoice_ids
+        if self.reconciled_invoice_ids:
+            for invoice in self.reconciled_invoice_ids:
+                if invoice.move_type == 'out_invoice':
+
+                if invoice.move_type == 'out_invoice':
 
             # email to customer for payment received Odoo default payment template
 
-            if self.custom_invoice_id.partner_id:
+            if invoice.partner_id:
                 payment_template = self.env.ref('account.mail_template_data_payment_receipt')
                 # Recupera il corpo della mail PRIMA di inviare
                 body_html = payment_template._render_field('body_html', [self.id])[self.id]
                 subject = payment_template._render_field('subject', [self.id])[self.id] or "Payment Receipt Sent"
                 payment_template.send_mail(self.id, force_send=True, raise_exception=False)
                 # Salva il corpo della mail inviata SOLO nel chatter della fattura
-                self.custom_invoice_id.message_post(
+                invoice.message_post(
                     body=body_html,
                     subject=subject,
                     message_type="email",
                     subtype_xmlid="mail.mt_note"
                 )
 
-            if self.custom_invoice_id.invoice_line_ids:
-                for line in self.custom_invoice_id.invoice_line_ids:
+            if invoice.invoice_line_ids:
+                for line in invoice.invoice_line_ids:
                     if line.agent_ids:
                         agent_obj = line.agent_ids[0].agent_id
                         break
@@ -48,9 +53,9 @@ class AccountPayment(models.Model):
                 if agent_obj.mail_on_register_payment:
                     if agent_obj.email:
                         salesperson_template = self.env.ref('tw_payment_mail.register_payment_salesperson_mail_it')
-                        salesperson_template.send_mail(self.custom_invoice_id.id, force_send=True, raise_exception=False)
+                        salesperson_template.send_mail(invoice.id, force_send=True, raise_exception=False)
 
-                        # self.sales_person_mail_template(self.custom_invoice_id, agent_obj, commission_name)
+                        # self.sales_person_mail_template(invoice, agent_obj, commission_name)
 
         return res
 
