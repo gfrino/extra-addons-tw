@@ -2,6 +2,18 @@
 
 Tutte le modifiche rilevanti a questo modulo saranno documentate in questo file.
 
+## [17.0.1.29.0] - 01 Dec 2025
+
+### Added
+- Viste ereditate per project.task tree view con campi VSD
+- Campo vsd_value con somma totale nel footer
+- Campi task_service_type_id e vsd_status visualizzabili e modificabili
+- Tree view editabile in modalità bottom
+- Supporto per viste: view_task_tree2, open_view_all_tasks_list_view, open_view_my_tasks_list_view
+
+### Fixed
+- Caricamento corretto delle viste ereditate per le liste task
+
 ## [17.0.1.28.0] - 01 Dec 2025
 
 ### Added
