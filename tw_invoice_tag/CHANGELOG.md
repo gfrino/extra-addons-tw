@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
+## [17.0.17.13] - 2025-12-02
+
+### Fixed
+- Changed inheritance target to `sale_management.sale_order_form_quote` to correctly inherit view that contains `sale_order_template_id`.
+
+## [17.0.17.12] - 2025-11-24
+
+### Fixed
+- Renamed view file and ID to force reload of the view.
+
+## [17.0.17.11] - 2025-11-24
+
+### Fixed
+- Added read access rights for internal users to `account.move.category` to ensure field visibility.
+- Reverted XPath anchor to `sale_order_template_id` as dependency issue is resolved.
+
+## [17.0.17.10] - 2025-11-24
+
+### Fixed
+- Changed XPath anchor to `payment_term_id` to ensure field visibility.
+- Increased view priority to 20.
+
+## [17.0.17.9] - 2025-11-24
+
+### Fixed
+- Added `sale_management` dependency to ensure correct view inheritance order for Sales Orders.
+
+## [17.0.17.8] - 2025-11-24
+
+### Added
+- Added `tw_category_id` to Sales Orders.
+- Propagate tags from Sales Order to Invoice.
+
 ## [17.0.17.6] - 2025-11-24
 
 ### Fixed

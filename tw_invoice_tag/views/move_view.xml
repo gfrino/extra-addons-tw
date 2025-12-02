@@ -13,7 +13,7 @@
 			<field name="arch" type="xml">
 				<xpath expr="//field[@name='payment_method_line_id']"
 					position="after">
-					<field name="category_id" widget="many2many_tags"
+					<field name="tw_category_id" widget="many2many_tags"
 						options="{'color_field': 'color', 'no_create_edit': True}"
 						placeholder="Tags..." />
 					<!--<field name="inv_untax_amt" invisible="1" />-->
@@ -74,18 +74,7 @@
 			</field>
 		</record>
 
-		<record id="view_res_partner_form_inhertied" model="ir.ui.view">
-			<field name="name">view.res.partner.inherit</field>
-			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="base.view_partner_form" />
-			<field name="arch" type="xml">
-				<xpath expr="//field[@name='category_id']" position="after">
-					<field name="move_category_id" widget="many2many_tags"
-						options="{'color_field': 'color', 'no_create_edit': True}"
-						placeholder="Tags..." />
-		</xpath>
-		</field>
-	</record>		<record id="view_account_invoice_filter_inherited" model="ir.ui.view">
+		<record id="view_account_invoice_filter_inherited" model="ir.ui.view">
 			<field name="name">account.invoice.select.inherit</field>
 			<field name="model">account.move</field>
 			<field name="inherit_id" ref="account.view_account_invoice_filter"/>
