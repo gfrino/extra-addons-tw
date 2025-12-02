@@ -11,16 +11,17 @@
     'author': "ticinoWEB",
     'website': "http://www.ticinoweb.com",
     'category': 'Accounting/Accounting',
-    'version': '17.0.17.7',
+    'version': '17.0.17.8',
     "license": "AGPL-3",
 
     # any module necessary for this one to work correctly
-    'depends': ['base','account',],
+    'depends': ['base','account','sale'],
     'images': ['static/description/banner.png'],
 
     # always loaded
     'data': [
         'views/move_view.xml',
+        'views/sale_order_view.xml',
         'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
