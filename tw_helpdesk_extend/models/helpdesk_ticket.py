@@ -36,12 +36,18 @@ class HelpdeskTicket(models.Model):
         Analyze email content using OpenAI to find a relevant contact.
         Returns partner_id (int) or None.
         """
-        api_key = self.env['ir.config_parameter'].sudo().get_param('tw_helpdesk_extend.openai_api_key')
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        api_key = get_param('tw_helpdesk_extend.openai_api_key')
+        
+        # Fallback to standard Odoo AI key if available
         if not api_key:
-            _logger.warning("OpenAI API key not configured. Skipping AI analysis.")
+            api_key = get_param('openai_api_key')
+            
+        if not api_key:
+            _logger.warning("OpenAI API key not configured (checked tw_helpdesk_extend and openai_api_key). Skipping AI analysis.")
             return None
 
-        model = self.env['ir.config_parameter'].sudo().get_param('tw_helpdesk_extend.openai_model', 'gpt-3.5-turbo')
+        model = get_param('tw_helpdesk_extend.openai_model', 'gpt-4o')
         
         # Prepare content for analysis
         email_from = msg_dict.get('from', '')

@@ -13,7 +13,7 @@
     'author': "ticinoWEB",
     'website': "https://ticinoweb.com",
     'category': 'Helpdesk',
-    'version': '17.0.1.0.0',
+    'version': '17.0.1.0.1',
     'depends': ['base', 'helpdesk_mgmt', 'mail'],
     'data': [
         'views/res_config_settings_views.xml',
