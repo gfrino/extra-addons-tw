@@ -10,9 +10,11 @@
         <field name="arch" type="xml">
 
             <xpath expr="//tree" position="inside">
-                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="vsd_value" sum="Total VSD Value" optional="show" class="text-primary fw-bold"/>
                 <field name="task_service_type_id" optional="show"/>
-                <field name="vsd_status" optional="show"/>
+                <field name="vsd_status" optional="show" widget="badge"
+                       decoration-warning="vsd_status == 'inprogress'"
+                       decoration-success="vsd_status == 'done'"/>
             </xpath>
 
             <xpath expr="//tree" position="attributes">
@@ -32,9 +34,11 @@
         <field name="arch" type="xml">
 
             <xpath expr="//tree" position="inside">
-                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="vsd_value" sum="Total VSD Value" optional="show" class="text-primary fw-bold"/>
                 <field name="task_service_type_id" optional="show"/>
-                <field name="vsd_status" optional="show"/>
+                <field name="vsd_status" optional="show" widget="badge"
+                       decoration-warning="vsd_status == 'inprogress'"
+                       decoration-success="vsd_status == 'done'"/>
             </xpath>
 
             <xpath expr="//tree" position="attributes">
@@ -54,9 +58,11 @@
         <field name="arch" type="xml">
 
             <xpath expr="//tree" position="inside">
-                <field name="vsd_value" sum="Total VSD Value" optional="show"/>
+                <field name="vsd_value" sum="Total VSD Value" optional="show" class="text-info fw-bold"/>
                 <field name="task_service_type_id" optional="show"/>
-                <field name="vsd_status" optional="show"/>
+                <field name="vsd_status" optional="show" widget="badge"
+                       decoration-warning="vsd_status == 'inprogress'"
+                       decoration-success="vsd_status == 'done'"/>
             </xpath>
 
             <xpath expr="//tree" position="attributes">

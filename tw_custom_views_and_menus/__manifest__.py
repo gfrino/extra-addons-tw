@@ -1,6 +1,6 @@
 {
     'name': 'TW Custom Views and Menus',
-    'version': '17.0.1.29.0',
+    'version': '17.0.1.30.0',
     'category': 'Customizations',
     'summary': 'Custom views and menus modifications specific for ticinoWEB internal odoo',
     'description': """

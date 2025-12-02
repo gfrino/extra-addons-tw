@@ -2,6 +2,11 @@
 
 Tutte le modifiche rilevanti a questo modulo saranno documentate in questo file.
 
+## [17.0.1.30.0] - 01 Dec 2025
+
+### Changed
+- `vsd_value` in project.task tree: testo blu in grassetto (class `text-primary fw-bold`).
+
 ## [17.0.1.29.0] - 01 Dec 2025
 
 ### Added
