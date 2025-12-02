@@ -8,8 +8,11 @@
             <xpath expr="//form" position="inside">
                 <app data-string="Helpdesk AI" string="Helpdesk AI" name="tw_helpdesk_extend">
                     <block title="AI Configuration" name="ai_config">
+                        <setting string="AI Provider" help="Choose between Odoo's global AI settings or a custom API key">
+                            <field name="tw_ai_provider" widget="radio"/>
+                        </setting>
                         <setting string="OpenAI Settings" help="Configure OpenAI connection for email analysis">
-                            <field name="tw_openai_api_key" password="True"/>
+                            <field name="tw_openai_api_key" password="True" invisible="tw_ai_provider != 'custom'" required="tw_ai_provider == 'custom'"/>
                             <field name="tw_openai_model"/>
                         </setting>
                     </block>

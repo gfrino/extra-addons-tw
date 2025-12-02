@@ -37,14 +37,19 @@ class HelpdeskTicket(models.Model):
         Returns partner_id (int) or None.
         """
         get_param = self.env['ir.config_parameter'].sudo().get_param
-        api_key = get_param('tw_helpdesk_extend.openai_api_key')
+        provider = get_param('tw_helpdesk_extend.ai_provider', 'odoo')
         
-        # Fallback to standard Odoo AI key if available
-        if not api_key:
-            api_key = get_param('openai_api_key')
+        api_key = False
+        if provider == 'odoo':
+            api_key = get_param('openai_api_key') # Common key used by other modules
+            if not api_key:
+                 # Fallback to odoo_chatgpt_connector if present
+                 api_key = get_param('odoo_chatgpt_connector.api_key')
+        else:
+            api_key = get_param('tw_helpdesk_extend.openai_api_key')
             
         if not api_key:
-            _logger.warning("OpenAI API key not configured (checked tw_helpdesk_extend and openai_api_key). Skipping AI analysis.")
+            _logger.warning("OpenAI API key not configured (Provider: %s). Skipping AI analysis.", provider)
             return None
 
         model = get_param('tw_helpdesk_extend.openai_model', 'gpt-4o')
