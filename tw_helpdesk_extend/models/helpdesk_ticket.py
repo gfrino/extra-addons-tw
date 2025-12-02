@@ -13,37 +13,80 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def message_new(self, msg_dict, custom_values=None):
-        """Override to attempt AI partner matching if standard matching fails or is generic."""
+        """Override to attempt AI analysis (partner matching + summary)."""
         vals = super(HelpdeskTicket, self).message_new(msg_dict, custom_values)
         
-        # If partner is already set, we might still want to check if it's a generic address?
-        # For now, let's assume we only run AI if no partner is found, 
-        # or if the found partner is likely a generic gateway (optional enhancement).
-        # The user request says "trys to automatically set the contact field".
+        # Perform AI analysis
+        ai_data = self._get_ai_analysis(msg_dict)
         
-        if not vals.get('partner_id'):
-            _logger.info("No partner found for ticket from %s. Attempting AI analysis.", msg_dict.get('from'))
-            ai_partner_id = self._get_partner_from_ai(msg_dict)
-            if ai_partner_id:
-                vals['partner_id'] = ai_partner_id
-                _logger.info("AI found partner %s for ticket.", ai_partner_id)
+        if ai_data:
+            # 1. Partner Matching (if needed)
+            if not vals.get('partner_id'):
+                partner_id = self._find_partner_from_ai_data(ai_data)
+                if partner_id:
+                    vals['partner_id'] = partner_id
+                    _logger.info("AI found partner %s for ticket.", partner_id)
+            
+            # 2. Summary & To-Do
+            description_addition = self._format_ai_description(ai_data)
+            if description_addition:
+                current_desc = vals.get('description', '')
+                vals['description'] = description_addition + current_desc
         
         return vals
 
+    def _find_partner_from_ai_data(self, data):
+        """Find partner based on AI extracted data."""
+        extracted_email = data.get('email')
+        extracted_name = data.get('name')
+        
+        if extracted_email:
+            partner = self.env['res.partner'].search([('email', '=ilike', extracted_email)], limit=1)
+            if partner:
+                return partner.id
+        
+        if extracted_name and not extracted_email:
+             partner = self.env['res.partner'].search([('name', '=ilike', extracted_name)], limit=1)
+             if partner:
+                 return partner.id
+        return None
+
+    def _format_ai_description(self, data):
+        """Format AI summary and todo into HTML."""
+        summary = data.get('summary')
+        todo = data.get('todo')
+        
+        if not summary and not todo:
+            return ""
+            
+        html = "<div class='alert alert-info' role='alert' style='margin-bottom: 15px;'>"
+        html += "<h4 class='alert-heading' style='font-weight: bold;'>🤖 AI Analysis</h4>"
+        
+        if summary:
+            html += f"<strong>Summary:</strong><p>{summary}</p>"
+            
+        if todo and isinstance(todo, list) and len(todo) > 0:
+            html += "<strong>Suggested To-Do:</strong><ul>"
+            for item in todo:
+                html += f"<li>{item}</li>"
+            html += "</ul>"
+            
+        html += "</div><hr/>"
+        return html
+
     @api.model
-    def _get_partner_from_ai(self, msg_dict):
+    def _get_ai_analysis(self, msg_dict):
         """
-        Analyze email content using OpenAI to find a relevant contact.
-        Returns partner_id (int) or None.
+        Analyze email content using OpenAI to find contact, summary and todo.
+        Returns dict or None.
         """
         get_param = self.env['ir.config_parameter'].sudo().get_param
         provider = get_param('tw_helpdesk_extend.ai_provider', 'odoo')
         
         api_key = False
         if provider == 'odoo':
-            api_key = get_param('openai_api_key') # Common key used by other modules
+            api_key = get_param('openai_api_key')
             if not api_key:
-                 # Fallback to odoo_chatgpt_connector if present
                  api_key = get_param('odoo_chatgpt_connector.api_key')
         else:
             api_key = get_param('tw_helpdesk_extend.openai_api_key')
@@ -57,16 +100,18 @@ class HelpdeskTicket(models.Model):
         # Prepare content for analysis
         email_from = msg_dict.get('from', '')
         subject = msg_dict.get('subject', '')
-        body = msg_dict.get('body', '') # This is usually HTML
+        body = msg_dict.get('body', '') 
         
-        # Simple HTML cleanup (very basic, just to reduce token usage)
+        # Simple HTML cleanup
         clean_body = re.sub('<[^<]+?>', ' ', body)
-        clean_body = ' '.join(clean_body.split())[:2000] # Limit length
+        clean_body = ' '.join(clean_body.split())[:3000] # Increased limit for better summary
         
         prompt = f"""
-        Analyze the following email to identify the actual person or contact who sent it.
-        Sometimes emails are sent via generic support addresses or forwarding services.
-        Look for signatures, "From:" lines in the body, or introductions.
+        Analyze the following helpdesk email.
+        
+        1. Identify the actual person or contact who sent it (look for signatures, From lines).
+        2. Summarize the issue described in the email.
+        3. Create a short to-do list for the support agent to resolve the issue.
         
         Email Header From: {email_from}
         Subject: {subject}
@@ -77,7 +122,8 @@ class HelpdeskTicket(models.Model):
         - "name": The extracted name of the person (or null)
         - "email": The extracted email address of the person (or null)
         - "phone": The extracted phone number (or null)
-        - "confidence": A score from 0 to 1 indicating how sure you are this is the actual requester.
+        - "summary": A concise summary of the issue (string)
+        - "todo": A list of short action items (array of strings)
         
         Only return the JSON.
         """
@@ -90,7 +136,7 @@ class HelpdeskTicket(models.Model):
         payload = {
             "model": model,
             "messages": [
-                {"role": "system", "content": "You are a helpful assistant that extracts contact information from emails. You always respond in valid JSON."},
+                {"role": "system", "content": "You are a helpful assistant that extracts information from helpdesk emails. You always respond in valid JSON."},
                 {"role": "user", "content": prompt}
             ],
             "temperature": 0.1
@@ -101,42 +147,21 @@ class HelpdeskTicket(models.Model):
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
                 json=payload,
-                timeout=10
+                timeout=15 # Increased timeout slightly
             )
             response.raise_for_status()
             
             result = response.json()
             content = result['choices'][0]['message']['content']
             
-            # Parse JSON from content (handle potential markdown code blocks)
+            # Parse JSON from content
             if "```json" in content:
                 content = content.split("```json")[1].split("```")[0]
             elif "```" in content:
                 content = content.split("```")[1].split("```")[0]
                 
-            data = json.loads(content.strip())
-            
-            extracted_email = data.get('email')
-            extracted_name = data.get('name')
-            
-            if extracted_email:
-                # Search for partner by email
-                partner = self.env['res.partner'].search([('email', '=ilike', extracted_email)], limit=1)
-                if partner:
-                    return partner.id
-                
-                # Optional: Create partner if not found? 
-                # The user didn't explicitly ask to create, just "set the contact field".
-                # Usually safer to only link existing, but let's stick to linking for now.
-                # If we want to match by name as fallback:
-            
-            if extracted_name and not extracted_email:
-                 partner = self.env['res.partner'].search([('name', '=ilike', extracted_name)], limit=1)
-                 if partner:
-                     return partner.id
+            return json.loads(content.strip())
 
         except Exception as e:
             _logger.error("Error during AI analysis: %s", str(e))
             return None
-            
-        return None
