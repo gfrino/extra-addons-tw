@@ -85,6 +85,8 @@ class AutoHostingInvoiceWizard(models.TransientModel):
             'invoice_user_id': self.invoice_id.invoice_user_id.id,
             # Copia il cash rounding dalla fattura originale
             'invoice_cash_rounding_id': self.invoice_id.invoice_cash_rounding_id.id if self.invoice_id.invoice_cash_rounding_id else False,
+            # Copia la categoria interna dalla fattura originale
+            'tw_category_id': [(6, 0, self.invoice_id.tw_category_id.ids)] if hasattr(self.invoice_id, 'tw_category_id') else [],
         }
         
         # Add optional fields if present

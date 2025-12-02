@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 
+## [17.0.1.2.1] - 2025-12-02
+
+### Fixed
+- The internal category (tw_category_id) is now correctly copied from the original invoice when generating a new invoice automatically.
+
 ## [17.0.1.2.0] - 2025-11-26
 
 ### Fixed
