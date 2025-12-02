@@ -14,24 +14,39 @@ class HelpdeskTicket(models.Model):
     @api.model
     def message_new(self, msg_dict, custom_values=None):
         """Override to attempt AI analysis (partner matching + summary)."""
-        vals = super(HelpdeskTicket, self).message_new(msg_dict, custom_values)
+        # Call super to create the ticket first
+        try:
+            vals = super(HelpdeskTicket, self).message_new(msg_dict, custom_values)
+        except Exception as e:
+            # If super fails, log it and re-raise. This helps debug the "bounce" email issue.
+            _logger.error("Error in super().message_new: %s", str(e))
+            raise e
         
         # Perform AI analysis
-        ai_data = self._get_ai_analysis(msg_dict)
-        
-        if ai_data:
-            # 1. Partner Matching (if needed)
-            if not vals.get('partner_id'):
-                partner_id = self._find_partner_from_ai_data(ai_data)
-                if partner_id:
-                    vals['partner_id'] = partner_id
-                    _logger.info("AI found partner %s for ticket.", partner_id)
+        try:
+            ai_data = self._get_ai_analysis(msg_dict)
             
-            # 2. Summary & To-Do
-            description_addition = self._format_ai_description(ai_data)
-            if description_addition:
-                current_desc = vals.get('description', '')
-                vals['description'] = description_addition + current_desc
+            if ai_data:
+                # 1. Partner Matching (Always try to improve partner matching)
+                # Even if partner_id is set (e.g. to the forwarding agent), we check if AI found a better one
+                ai_partner_id = self._find_partner_from_ai_data(ai_data)
+                
+                if ai_partner_id:
+                    # If AI found a partner, we prefer it over the default one (which might be the forwarder)
+                    # But only if it's different from the current one
+                    if vals.get('partner_id') != ai_partner_id:
+                        vals['partner_id'] = ai_partner_id
+                        _logger.info("AI updated partner to %s (overriding default matching).", ai_partner_id)
+                
+                # 2. Summary & To-Do
+                description_addition = self._format_ai_description(ai_data)
+                if description_addition:
+                    current_desc = vals.get('description', '')
+                    vals['description'] = description_addition + current_desc
+                    
+        except Exception as e:
+            # Catch AI errors so we don't block ticket creation or cause bounces
+            _logger.error("Error during AI processing in message_new: %s", str(e))
         
         return vals
 
