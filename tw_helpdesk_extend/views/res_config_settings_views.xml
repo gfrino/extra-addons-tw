@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.tw.helpdesk</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Helpdesk AI" string="Helpdesk AI" name="tw_helpdesk_extend">
+                    <block title="AI Configuration" name="ai_config">
+                        <setting string="OpenAI Settings" help="Configure OpenAI connection for email analysis">
+                            <field name="tw_openai_api_key" password="True"/>
+                            <field name="tw_openai_model"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
