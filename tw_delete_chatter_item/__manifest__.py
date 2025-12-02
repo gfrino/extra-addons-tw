@@ -24,7 +24,7 @@
     "license": "LGPL-3",
     "author": "ticinoWEB",
     "website": "http://www.ticinoweb.tech",
-    "version": '17.0.1.0.0',
+    "version": '17.0.1.0.1',
     "depends": ['base', 'mail'],
     "data": [
         'security/security.xml',
@@ -34,8 +34,10 @@
     "assets": {
         'web.assets_backend': [
             'tw_delete_chatter_item/static/src/js/message_delete.js',
+            'tw_delete_chatter_item/static/src/xml/message_delete.xml',
         ],
     },
+    "images": ['static/description/banner.png'],
     "price": 5,
     "currency": 'EUR',
     "installable": True,

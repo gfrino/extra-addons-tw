@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Chatter Messages - Odoo Module</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .features {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .features ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        .features li {
+            margin: 8px 0;
+        }
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .screenshot-placeholder {
+            background: #e9ecef;
+            border: 2px dashed #6c757d;
+            padding: 60px;
+            text-align: center;
+            margin: 20px 0;
+            color: #6c757d;
+            font-style: italic;
+        }
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        .steps li:before {
+            content: counter(step-counter);
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .security-note {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .btn-example {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🗑️ Delete Chatter Messages</h1>
+    
+    <p style="font-size: 1.2em; color: #555;">
+        Empower your authorized users with the ability to delete messages from Odoo's chatter. 
+        Keep your communication history clean and professional with full permission control.
+    </p>
+
+    <div class="screenshot-placeholder">
+        📸 Main Screenshot - Delete button on chatter message
+        <br><small>(Screenshot will be added here)</small>
+    </div>
+
+    <h2>✨ Key Features</h2>
+    
+    <div class="features">
+        <ul>
+            <li><strong>🔒 Permission-Based Access</strong> - Only authorized users can delete messages</li>
+            <li><strong>🎯 Works Everywhere</strong> - Functions on all models with chatter (Sales, Invoices, Projects, etc.)</li>
+            <li><strong>📝 Audit Trail</strong> - All deletions are logged with user information and timestamp</li>
+            <li><strong>⚡ Easy to Use</strong> - Simple trash icon appears directly on each message</li>
+            <li><strong>🛡️ Security Group</strong> - Dedicated security group for fine-grained permission control</li>
+            <li><strong>✅ Confirmation Dialog</strong> - Prevents accidental deletions with confirmation prompt</li>
+            <li><strong>🔄 Real-time Updates</strong> - Messages are removed instantly from the UI</li>
+        </ul>
+    </div>
+
+    <h2>🚀 Use Cases</h2>
+    
+    <h3>When You Need This Module</h3>
+    <ul>
+        <li><strong>Remove Spam or Test Messages</strong> - Clean up accidental test messages or spam in production</li>
+        <li><strong>Compliance & Privacy</strong> - Delete messages containing sensitive information upon request</li>
+        <li><strong>Professional Communication</strong> - Maintain clean and professional communication history</li>
+        <li><strong>Error Correction</strong> - Remove messages sent in error or to wrong records</li>
+        <li><strong>Data Cleanup</strong> - Remove obsolete or irrelevant communication items</li>
+    </ul>
+
+    <div class="screenshot-placeholder">
+        📸 Screenshot - Permission management screen
+        <br><small>(Screenshot will be added here)</small>
+    </div>
+
+    <h2>⚙️ Configuration</h2>
+    
+    <h3>Granting Permission to Users</h3>
+    
+    <ol class="steps">
+        <li>Navigate to <strong>Settings → Users & Companies → Users</strong></li>
+        <li>Select the user you want to grant deletion rights to</li>
+        <li>Click on the <strong>Access Rights</strong> tab</li>
+        <li>Scroll to <strong>Chatter Messages</strong> section</li>
+        <li>Enable the checkbox for <strong>"Delete Chatter Messages"</strong></li>
+        <li>Click <strong>Save</strong></li>
+    </ol>
+
+    <div class="highlight">
+        <strong>💡 Pro Tip:</strong> You can assign this permission to specific user groups to streamline permission management 
+        across your organization. Consider creating a "Chatter Moderators" group for team members who need this capability.
+    </div>
+
+    <h2>📖 How to Use</h2>
+    
+    <h3>Deleting a Chatter Message</h3>
+    
+    <ol class="steps">
+        <li>Open any record with chatter (Sale Order, Invoice, Contact, Project Task, etc.)</li>
+        <li>Scroll to the chatter section at the bottom of the form</li>
+        <li>Hover over the message you want to delete</li>
+        <li>Click the <strong>trash icon (🗑️)</strong> that appears on the message</li>
+        <li>Confirm the deletion in the dialog that appears</li>
+        <li>The message is instantly removed from the chatter</li>
+    </ol>
+
+    <div class="screenshot-placeholder">
+        📸 Screenshot - Delete confirmation dialog
+        <br><small>(Screenshot will be added here)</small>
+    </div>
+
+    <h2>🔐 Security & Audit</h2>
+    
+    <div class="security-note">
+        <h3 style="margin-top: 0;">Built with Security in Mind</h3>
+        <ul style="margin-bottom: 0;">
+            <li><strong>Access Control:</strong> Only users with explicit permission can delete messages</li>
+            <li><strong>Audit Logging:</strong> Every deletion is logged with:
+                <ul>
+                    <li>User name and ID who performed the deletion</li>
+                    <li>Message ID that was deleted</li>
+                    <li>Model and record ID where the message was located</li>
+                    <li>Timestamp of the deletion</li>
+                </ul>
+            </li>
+            <li><strong>No Backdoors:</strong> Even administrators must have the permission explicitly granted</li>
+            <li><strong>Confirmation Required:</strong> Users must confirm before deletion is executed</li>
+        </ul>
+    </div>
+
+    <h2>🛠️ Technical Information</h2>
+    
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Version</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;">17.0.1.0.0</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>License</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;">LGPL-3</td>
+        </tr>
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Category</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;">Discuss</td>
+        </tr>
+        <tr>
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Dependencies</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;">base, mail</td>
+        </tr>
+        <tr style="background: #f8f9fa;">
+            <td style="padding: 10px; border: 1px solid #dee2e6;"><strong>Odoo Version</strong></td>
+            <td style="padding: 10px; border: 1px solid #dee2e6;">Odoo 17.0 Community & Enterprise</td>
+        </tr>
+    </table>
+
+    <h2>❓ FAQ</h2>
+    
+    <h3>Q: Can deleted messages be recovered?</h3>
+    <p><strong>A:</strong> No, message deletion is permanent. However, all deletions are logged in the system logs 
+    for audit purposes. Make sure to use this feature carefully.</p>
+
+    <h3>Q: Will this work on all models with chatter?</h3>
+    <p><strong>A:</strong> Yes! The delete functionality works on any model that has chatter enabled - 
+    Sales Orders, Invoices, Contacts, Projects, Tasks, Tickets, and any custom models with chatter.</p>
+
+    <h3>Q: Can I control who can delete messages?</h3>
+    <p><strong>A:</strong> Absolutely! The module includes a dedicated security group. You have full control 
+    over which users or groups have deletion rights.</p>
+
+    <h3>Q: Does this affect system messages or only user messages?</h3>
+    <p><strong>A:</strong> Users with permission can delete any type of message including notes, emails, 
+    and system-generated messages. Use this power responsibly!</p>
+
+    <h3>Q: Is there a confirmation before deletion?</h3>
+    <p><strong>A:</strong> Yes, a confirmation dialog appears every time, preventing accidental deletions.</p>
+
+    <h2>🆘 Support</h2>
+    
+    <p>Need help or have questions? We're here to assist you!</p>
+    <ul>
+        <li><strong>Email:</strong> support@ticinoweb.tech</li>
+        <li><strong>Website:</strong> <a href="http://www.ticinoweb.tech">www.ticinoweb.tech</a></li>
+        <li><strong>Documentation:</strong> Full documentation included in the module README</li>
+    </ul>
+
+    <div class="highlight">
+        <p style="margin: 0; font-size: 1.1em;">
+            <strong>💼 Need customization?</strong> We offer professional Odoo development services. 
+            Contact us for custom features, integration, or technical support.
+        </p>
+    </div>
+
+    <h2>🌟 Why Choose This Module?</h2>
+    
+    <ul>
+        <li>✅ <strong>Production Ready</strong> - Thoroughly tested and stable</li>
+        <li>✅ <strong>Odoo 17 Compatible</strong> - Built specifically for Odoo 17 architecture</li>
+        <li>✅ <strong>Easy Installation</strong> - One-click install, no complex setup</li>
+        <li>✅ <strong>Professional Support</strong> - Backed by ticinoWEB's expertise</li>
+        <li>✅ <strong>Regular Updates</strong> - Maintained and updated for new Odoo versions</li>
+        <li>✅ <strong>Clean Code</strong> - Well-documented, following Odoo best practices</li>
+    </ul>
+
+    <div style="background: #3498db; color: white; padding: 30px; text-align: center; margin: 40px 0; border-radius: 10px;">
+        <h2 style="color: white; margin-top: 0;">Ready to Clean Up Your Chatter?</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">
+            Install now and give your team the power to maintain professional communication history!
+        </p>
+    </div>
+
+    <hr style="margin: 40px 0; border: none; border-top: 1px solid #dee2e6;">
+    
+    <p style="text-align: center; color: #6c757d; font-size: 0.9em;">
+        &copy; 2025 ticinoWEB. All rights reserved. | License: LGPL-3 | Made with ❤️ for the Odoo Community
+    </p>
+
+</body>
+</html>

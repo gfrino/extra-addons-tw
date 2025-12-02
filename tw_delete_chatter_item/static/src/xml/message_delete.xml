@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="tw_delete_chatter_item.MessageActions" t-inherit="mail.Message.actions" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o-mail-Message-actions')]/div" position="inside">
+            <button class="btn px-1 py-0 rounded-0 text-danger"
+                    title="Delete Message"
+                    t-on-click="onClickDeleteMessage">
+                <i class="fa fa-lg fa-trash-o"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>
