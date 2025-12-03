@@ -6,11 +6,11 @@
         <field name="model">account.payment</field>
         <field name="inherit_id" ref="account.view_account_payment_form"/>
         <field name="arch" type="xml">
-            <field name="amount" position="after">
+            <xpath expr="//field[@name='date']" position="before">
                 <field name="company_currency_id" invisible="1"/>
                 <field name="tw_vat_amount"/>
                 <field name="tw_vat_amount_company"/>
-            </field>
+            </xpath>
         </field>
     </record>
 
