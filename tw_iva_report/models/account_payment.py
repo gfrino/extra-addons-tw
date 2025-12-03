@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountPayment(models.Model):
@@ -15,7 +18,8 @@ class AccountPayment(models.Model):
     )
 
     @api.depends('reconciled_invoice_ids', 'reconciled_invoice_ids.amount_tax',
-                 'reconciled_bill_ids', 'reconciled_bill_ids.amount_tax')
+                 'reconciled_bill_ids', 'reconciled_bill_ids.amount_tax',
+                 'move_id.line_ids.reconciled')
     def _compute_vat_amount(self):
         """Compute total VAT from all reconciled invoices and bills"""
         for payment in self:
@@ -27,3 +31,4 @@ class AccountPayment(models.Model):
             if payment.reconciled_bill_ids:
                 vat_amount += sum(payment.reconciled_bill_ids.mapped('amount_tax'))
             payment.tw_vat_amount = vat_amount
+            _logger.debug(f"Payment {payment.id}: VAT amount computed = {vat_amount}")
