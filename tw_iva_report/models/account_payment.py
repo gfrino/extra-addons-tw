@@ -10,7 +10,7 @@ class AccountPayment(models.Model):
     _inherit = "account.payment"
 
     tw_vat_amount = fields.Monetary(
-        string='Ammontare IVA',
+        string='Amm. IVA',
         compute='_compute_vat_amount',
         store=True,
         currency_field='currency_id',
@@ -18,7 +18,7 @@ class AccountPayment(models.Model):
     )
     
     tw_vat_amount_company = fields.Monetary(
-        string='IVA Valuta Locale',
+        string='Amm. IVA CHF',
         compute='_compute_vat_amount',
         store=True,
         currency_field='company_currency_id',

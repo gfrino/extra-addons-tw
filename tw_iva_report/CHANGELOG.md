@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [17.0.1.0.3] - 2025-12-03
+## [17.0.1.0.5] - 2025-12-03
+
+### Fixed
+- Fixed form view layout: VAT fields now properly displayed in column format with labels
+- Updated field labels to "Amm. IVA" and "Amm. IVA CHF"
+- Removed `no_symbol` option to show currency symbols correctly
+- Tree view sum labels changed to Italian
+
+## [17.0.1.0.4] - 2025-12-03
 
 ### Added
 - Added `tw_vat_amount_company` field to show VAT in company currency (CHF)
