@@ -1,5 +1,5 @@
 {
-    'name': "IVA Report - VAT Amount in Payments",
+    'name': "Simple VAT Report",
     'summary': """Display VAT/IVA amounts from invoices in payment records with currency conversion""",
     'description': """
 VAT Amount Display in Payment Records

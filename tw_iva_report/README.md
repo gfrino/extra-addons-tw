@@ -1,4 +1,4 @@
-# IVA Report - VAT Amount in Payments
+# Simple VAT Report
 
 [![License: AGPL-3](https://img.shields.io/badge/license-AGPL--3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
@@ -28,7 +28,7 @@ This module enhances Odoo payment records by displaying VAT (IVA) amounts from r
 1. Download the module
 2. Place it in your Odoo addons directory
 3. Update the app list
-4. Install "IVA Report - VAT Amount in Payments"
+4. Install "Simple VAT Report"
 
 ## Usage
 
