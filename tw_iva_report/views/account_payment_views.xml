@@ -6,16 +6,10 @@
         <field name="model">account.payment</field>
         <field name="inherit_id" ref="account.view_account_payment_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='amount']" position="after">
+            <xpath expr="//group[@name='group_amount']" position="inside">
                 <field name="company_currency_id" invisible="1"/>
-                <label for="tw_vat_amount"/>
-                <div class="o_row">
-                    <field name="tw_vat_amount" class="oe_inline"/>
-                </div>
-                <label for="tw_vat_amount_company"/>
-                <div class="o_row">
-                    <field name="tw_vat_amount_company" class="oe_inline"/>
-                </div>
+                <field name="tw_vat_amount"/>
+                <field name="tw_vat_amount_company"/>
             </xpath>
         </field>
     </record>
