@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [17.0.1.0.3] - 2025-12-03
+
+### Added
+- Added `tw_vat_amount_company` field to show VAT in company currency (CHF)
+- Company currency VAT visible in tree view with sum total
+- Original currency VAT optional in tree view
+
+### Fixed
+- Fixed migration script to directly update VAT amounts via SQL
+- Fixed form view layout: VAT fields now appear below amount field
+- Removed duplicate currency symbols using `no_symbol` option
+
 ## [17.0.1.0.2] - 2025-12-03
 
 ### Fixed

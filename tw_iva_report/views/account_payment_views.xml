@@ -7,8 +7,9 @@
         <field name="inherit_id" ref="account.view_account_payment_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount']" position="after">
-                <label for="tw_vat_amount"/>
-                <field name="tw_vat_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="tw_vat_amount" widget="monetary" options="{'currency_field': 'currency_id', 'no_symbol': True}"/>
+                <field name="tw_vat_amount_company" widget="monetary" options="{'currency_field': 'company_currency_id', 'no_symbol': True}"/>
+                <field name="company_currency_id" invisible="1"/>
             </xpath>
         </field>
     </record>
@@ -20,7 +21,9 @@
         <field name="inherit_id" ref="account.view_account_payment_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount_signed']" position="after">
-                <field name="tw_vat_amount" widget="monetary" sum="Total VAT" options="{'currency_field': 'currency_id'}"/>
+                <field name="tw_vat_amount" widget="monetary" sum="Total VAT" optional="hide" options="{'currency_field': 'currency_id', 'no_symbol': True}"/>
+                <field name="tw_vat_amount_company" widget="monetary" sum="Total VAT CHF" optional="show" options="{'currency_field': 'company_currency_id'}"/>
+                <field name="company_currency_id" column_invisible="1"/>
             </xpath>
         </field>
     </record>
