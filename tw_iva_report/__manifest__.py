@@ -37,7 +37,7 @@ For support, please contact: support@ticinoweb.com
     'author': "ticinoWEB",
     'website': "https://www.ticinoweb.com",
     'category': 'Accounting/Accounting',
-    'version': '17.0.1.0.7',
+    'version': '17.0.1.0.8',
     'license': 'AGPL-3',
     'price': 15.00,
     'currency': 'EUR',
