@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     
+    <!-- Override standard layout to add top margin -->
+    <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[hasclass('header')]" position="attributes">
+            <attribute name="style">padding-top: 20mm;</attribute>
+        </xpath>
+    </template>
+    
     <!-- Custom External Layout - Complete Control -->
     <template id="external_layout_tw_custom" name="TW Custom Layout">
-        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style" style="padding-top: 20mm;">
             <div class="row" style="margin-bottom: 10px;">
                 <div class="col-4">
                     <img t-if="company.logo" 
