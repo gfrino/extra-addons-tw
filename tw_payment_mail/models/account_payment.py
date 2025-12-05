@@ -4,6 +4,9 @@ import datetime
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError, UserError
 import base64
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountPayment(models.Model):
@@ -13,9 +16,22 @@ class AccountPayment(models.Model):
         agent_obj = None
 
         res = super(AccountPayment, self).action_post()
-        # In Odoo 17, reconciled_invoice_ids replaces invoice_ids
-        if self.reconciled_invoice_ids:
-            for invoice in self.reconciled_invoice_ids:
+        
+        # In Odoo 17, reconciled_invoice_ids is populated AFTER action_post()
+        # So we get invoices from context instead
+        active_ids = self.env.context.get('active_ids', [])
+        active_model = self.env.context.get('active_model', '')
+        
+        invoices = self.env['account.move'].browse()
+        if active_model == 'account.move' and active_ids:
+            invoices = self.env['account.move'].browse(active_ids)
+        elif active_model == 'account.move.line' and active_ids:
+            # If payment is registered from move lines, get the invoices
+            move_lines = self.env['account.move.line'].browse(active_ids)
+            invoices = move_lines.mapped('move_id')
+        
+        if invoices:
+            for invoice in invoices:
                 if invoice.move_type == 'out_invoice':
                     # email to customer for payment received Odoo default payment template
                     if invoice.partner_id:
@@ -23,9 +39,9 @@ class AccountPayment(models.Model):
                         # Recupera il corpo della mail PRIMA di inviare
                         body_html = payment_template._render_field('body_html', [self.id])[self.id]
                         subject = payment_template._render_field('subject', [self.id])[self.id] or "Payment Receipt Sent"
-                        payment_template.send_mail(self.id, force_send=True, raise_exception=False)
+                        payment_template.sudo().send_mail(self.id, force_send=True, raise_exception=False)
                         # Salva il corpo della mail inviata SOLO nel chatter della fattura
-                        invoice.message_post(
+                        invoice.sudo().message_post(
                             body=body_html,
                             subject=subject,
                             message_type="email",
@@ -49,7 +65,7 @@ class AccountPayment(models.Model):
                         if agent_obj.mail_on_register_payment:
                             if agent_obj.email:
                                 salesperson_template = self.env.ref('tw_payment_mail.register_payment_salesperson_mail_it')
-                                salesperson_template.send_mail(invoice.id, force_send=True, raise_exception=False)
+                                salesperson_template.sudo().send_mail(invoice.id, force_send=True, raise_exception=False)
 
                                 # self.sales_person_mail_template(invoice, agent_obj, commission_name)
 

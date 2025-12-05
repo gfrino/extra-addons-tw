@@ -3,7 +3,7 @@
     
     <!-- Override standard layout to add top margin -->
     <template id="external_layout_standard" inherit_id="web.external_layout_standard">
-        <xpath expr="//div[hasclass('header')]" position="attributes">
+        <xpath expr="//div[contains(@t-attf-class, 'header')]" position="attributes">
             <attribute name="style">padding-top: 20mm;</attribute>
         </xpath>
     </template>
