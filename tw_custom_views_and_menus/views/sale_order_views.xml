@@ -6,8 +6,11 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='invoice_status']" position="attributes">
+            <!-- Override the readonly constraint on invoice_status field -->
+            <!-- The field is computed but we allow manual override -->
+            <xpath expr="//field[@name='invoice_status' and @groups='base.group_no_one']" position="attributes">
                 <attribute name="readonly">False</attribute>
+                <attribute name="force_save">1</attribute>
             </xpath>
         </field>
     </record>
