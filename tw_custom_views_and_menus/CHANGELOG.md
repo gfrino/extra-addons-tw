@@ -2,6 +2,12 @@
 
 Tutte le modifiche rilevanti a questo modulo saranno documentate in questo file.
 
+## [17.0.1.30.4] - 01 Dec 2025
+
+### Added
+- Campo `invoice_status` in sale.order sempre modificabile (readonly=False) a prescindere dallo stato dell'ordine
+- Vista ereditata sale.order per personalizzazione campo stato fatturazione
+
 ## [17.0.1.30.0] - 01 Dec 2025
 
 ### Changed
