@@ -30,6 +30,7 @@ class StatBookAddChartWizard(models.TransientModel):
         ('date:quarter', 'Trimestre'),
         ('date:year', 'Anno'),
     ], default='date:month', required=True)
+    # Deprecated simple filter; replaced by domain editor in the view
     filter_selection = fields.Selection(selection='_get_filter_options', string='Filtro')
 
     model_name = fields.Char(readonly=True)
@@ -37,8 +38,9 @@ class StatBookAddChartWizard(models.TransientModel):
     context = fields.Text(default='{}')
 
     def _get_filter_options(self):
+        # Ensure 'all' is always a valid option, even before model_name is set
         if not self.model_name:
-            return []
+            return [('all', 'Tutti')]
         mapping = {
             'account.move': [('posted','Solo Registrate'),('out_invoice','Fatture Clienti'),('in_invoice','Fatture Fornitori')],
             'sale.order': [('sale','Confermati'),('draft','Bozze')],
@@ -47,7 +49,7 @@ class StatBookAddChartWizard(models.TransientModel):
             'stock.picking': [('done','Completati'),('assigned','Disponibili')],
             'project.task': [('open','Aperte'),('done','Fatte')],
         }
-        return [(k, v) for k, v in mapping.get(self.model_name, [])]
+        return [('all', 'Tutti')] + [(k, v) for k, v in mapping.get(self.model_name, [])]
 
     def action_next_step(self):
         selected_app = self.app_selection or self.env.context.get('app_force')
@@ -66,7 +68,6 @@ class StatBookAddChartWizard(models.TransientModel):
             'model_name': selected_app,
             'app_selection': selected_app,
             'name': self.name or default_names.get(selected_app, 'Grafico'),
-            'filter_selection': 'all',
         })
         return {
             'type': 'ir.actions.act_window',
@@ -77,36 +78,14 @@ class StatBookAddChartWizard(models.TransientModel):
         }
 
     def _build_domain(self):
-        if not self.filter_selection or self.filter_selection == 'all':
-            return []
-        mapping = {
-            'account.move': {
-                'posted': [('state', '=', 'posted')],
-                'out_invoice': [('move_type', '=', 'out_invoice')],
-                'in_invoice': [('move_type', '=', 'in_invoice')],
-            },
-            'sale.order': {
-                'sale': [('state', 'in', ['sale', 'done'])],
-                'draft': [('state', '=', 'draft')],
-            },
-            'crm.lead': {
-                'won': [('stage_is_won', '=', True)],
-                'lost': [('active', '=', False)],
-            },
-            'purchase.order': {
-                'purchase': [('state', 'in', ['purchase', 'done'])],
-                'draft': [('state', '=', 'draft')],
-            },
-            'stock.picking': {
-                'done': [('state', '=', 'done')],
-                'assigned': [('state', '=', 'assigned')],
-            },
-            'project.task': {
-                'open': [('stage_id.fold', '=', False)],
-                'done': [('stage_id.fold', '=', True)],
-            },
-        }
-        return mapping.get(self.model_name, {}).get(self.filter_selection, [])
+        # Prefer the domain built via the domain editor in the view
+        try:
+            dom = json.loads(self.domain or '[]')
+            if isinstance(dom, list):
+                return dom
+        except Exception:
+            pass
+        return []
 
     def _build_context(self):
         date_field_map = {

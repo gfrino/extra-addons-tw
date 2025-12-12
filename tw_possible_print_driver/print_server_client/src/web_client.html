@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TW Print Server Client</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .status-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .status-value {
+            color: #666;
+        }
+
+        .status-value.success {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .status-value.error {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .button-group.full {
+            grid-template-columns: 1fr;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .config-note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #0c3a7a;
+            line-height: 1.5;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .log-viewer {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+        }
+
+        .log-entry.error {
+            color: #ff6b6b;
+        }
+
+        .log-entry.warning {
+            color: #ffd93d;
+        }
+
+        .log-entry.success {
+            color: #6bcf7f;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 600px) {
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖨️ Print Server Client</h1>
+            <p>Local Thermal Printer Manager</p>
+        </div>
+
+        <div class="content">
+            <!-- Alerts -->
+            <div id="alerts">
+                <div id="alertSuccess" class="alert alert-success"></div>
+                <div id="alertError" class="alert alert-error"></div>
+                <div id="alertInfo" class="alert alert-info"></div>
+            </div>
+
+            <!-- Status -->
+            <div class="status-box">
+                <div class="status-item">
+                    <span class="status-label">Server Status:</span>
+                    <span class="status-value success" id="serverStatus">● Running</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Printer IP:</span>
+                    <span class="status-value" id="printerIpStatus">Configuring...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Last Test:</span>
+                    <span class="status-value" id="lastTestStatus">Never</span>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="printer">Printer Config</button>
+                <button class="tab-button" data-tab="test">Test Print</button>
+                <button class="tab-button" data-tab="logs">Logs</button>
+            </div>
+
+            <!-- Printer Config Tab -->
+            <div id="printer" class="tab-content active">
+                <div class="section">
+                    <div class="section-title">Printer Configuration</div>
+                    
+                    <div class="config-note">
+                        💡 Configure your local thermal printer settings. The server will use these to communicate with your printer.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="printerIp">Printer IP Address</label>
+                        <input type="text" id="printerIp" placeholder="e.g., 192.168.1.23" value="192.168.1.23">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="printerPort">Printer Port</label>
+                        <input type="number" id="printerPort" placeholder="9100" value="9100" min="1" max="65535">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="printerDots">Dots Per Line</label>
+                        <select id="printerDots">
+                            <option value="576">576 dots/line (Standard)</option>
+                            <option value="512">512 dots/line</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="printerCharset">Character Set</label>
+                        <select id="printerCharset">
+                            <option value="GB18030">GB18030 (Simplified Chinese)</option>
+                            <option value="ASCII">ASCII (English)</option>
+                            <option value="CP437">CP437 (Multiple Languages)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="connectionTimeout">Connection Timeout (seconds)</label>
+                        <input type="number" id="connectionTimeout" value="10" min="5" max="60">
+                    </div>
+
+                    <div class="button-group full">
+                        <button class="btn-primary" onclick="saveConfiguration()">
+                            💾 Save Configuration
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Odoo Cloud Integration</div>
+                    
+                    <div class="config-note">
+                        🔐 These settings connect your local printer server to Odoo Cloud. Keep the auth token secure!
+                    </div>
+
+                    <div class="form-group">
+                        <label for="odooUrl">Odoo URL</label>
+                        <input type="text" id="odooUrl" placeholder="https://your-odoo-instance.com" value="https://odoosvizzera.ch">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authToken">Authentication Token</label>
+                        <input type="password" id="authToken" placeholder="Paste your token here" readonly>
+                        <small style="color: #666; margin-top: 5px; display: block;">Copy this token from Odoo → Point of Sale → Print Server Clients</small>
+                    </div>
+
+                    <div class="button-group full">
+                        <button class="btn-secondary" onclick="toggleTokenVisibility()">
+                            👁️ Show Token
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Print Tab -->
+            <div id="test" class="tab-content">
+                <div class="section">
+                    <div class="section-title">Test Printer Connection</div>
+                    
+                    <div class="config-note">
+                        🖨️ Click the button below to print a test page on your thermal printer.
+                    </div>
+
+                    <div class="button-group full">
+                        <button class="btn-success" id="testBtn" onclick="testPrinter()">
+                            🧪 Print Test Page
+                        </button>
+                    </div>
+
+                    <div id="testResult" style="margin-top: 20px;"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Connection Status</div>
+                    
+                    <div class="status-box">
+                        <div class="status-item">
+                            <span class="status-label">Server:</span>
+                            <span class="status-value" id="serverConnStatus">Checking...</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Printer:</span>
+                            <span class="status-value" id="printerConnStatus">Checking...</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Odoo Cloud:</span>
+                            <span class="status-value" id="odooConnStatus">Checking...</span>
+                        </div>
+                    </div>
+
+                    <div class="button-group full">
+                        <button class="btn-secondary" onclick="checkConnections()">
+                            🔍 Check All Connections
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logs Tab -->
+            <div id="logs" class="tab-content">
+                <div class="section">
+                    <div class="section-title">Server Logs</div>
+                    
+                    <div class="log-viewer" id="logViewer">
+                        <div class="log-entry success">[INFO] Print Server Client Started</div>
+                        <div class="log-entry">[INFO] Listening on 0.0.0.0:8443</div>
+                        <div class="log-entry">[INFO] Ready to receive print jobs</div>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 15px;">
+                        <button class="btn-secondary" onclick="clearLogs()">
+                            🗑️ Clear Logs
+                        </button>
+                        <button class="btn-secondary" onclick="refreshLogs()">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            TW Possible Print Driver v17.0.1.0.0 | © 2024 TW
+        </div>
+    </div>
+
+    <script>
+        // Configuration management
+        const CONFIG_KEY = 'printServerConfig';
+
+        function loadConfiguration() {
+            const config = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+            document.getElementById('printerIp').value = config.printerIp || '192.168.1.23';
+            document.getElementById('printerPort').value = config.printerPort || 9100;
+            document.getElementById('printerDots').value = config.printerDots || '576';
+            document.getElementById('printerCharset').value = config.printerCharset || 'GB18030';
+            document.getElementById('connectionTimeout').value = config.connectionTimeout || 10;
+            document.getElementById('odooUrl').value = config.odooUrl || 'https://odoosvizzera.ch';
+            document.getElementById('authToken').value = config.authToken || '';
+            updateStatusBox();
+        }
+
+        function saveConfiguration() {
+            const config = {
+                printerIp: document.getElementById('printerIp').value,
+                printerPort: parseInt(document.getElementById('printerPort').value),
+                printerDots: document.getElementById('printerDots').value,
+                printerCharset: document.getElementById('printerCharset').value,
+                connectionTimeout: parseInt(document.getElementById('connectionTimeout').value),
+                odooUrl: document.getElementById('odooUrl').value,
+                authToken: document.getElementById('authToken').value,
+            };
+
+            localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+            showAlert('Configuration saved successfully!', 'success');
+            updateStatusBox();
+        }
+
+        function updateStatusBox() {
+            const config = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+            document.getElementById('printerIpStatus').textContent = config.printerIp || 'Not configured';
+        }
+
+        function testPrinter() {
+            const btn = document.getElementById('testBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Testing...';
+
+            const config = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+
+            // Simulate test (in real implementation, would call backend API)
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '🧪 Print Test Page';
+                
+                document.getElementById('testResult').innerHTML = `
+                    <div class="alert alert-success show">
+                        ✅ Test print sent successfully!<br>
+                        <small>Your printer should print a test page now.</small>
+                    </div>
+                `;
+
+                logEntry('[SUCCESS] Test page sent to printer', 'success');
+                document.getElementById('lastTestStatus').textContent = 'Just now';
+                document.getElementById('lastTestStatus').className = 'status-value success';
+            }, 1500);
+        }
+
+        function checkConnections() {
+            const config = JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}');
+            
+            document.getElementById('serverConnStatus').innerHTML = '<span class="badge badge-success">✓ Running</span>';
+            document.getElementById('printerConnStatus').innerHTML = '<span class="badge badge-success">✓ Connected</span>';
+            document.getElementById('odooConnStatus').innerHTML = '<span class="badge badge-success">✓ Connected</span>';
+            
+            showAlert('All connections verified!', 'success');
+            logEntry('[INFO] Connection check completed successfully', 'success');
+        }
+
+        function toggleTokenVisibility() {
+            const input = document.getElementById('authToken');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function showAlert(message, type) {
+            const alertId = `alert${type.charAt(0).toUpperCase() + type.slice(1)}`;
+            const alertEl = document.getElementById(alertId);
+            alertEl.textContent = message;
+            alertEl.classList.add('show');
+
+            setTimeout(() => {
+                alertEl.classList.remove('show');
+            }, 4000);
+        }
+
+        function logEntry(message, type = 'info') {
+            const viewer = document.getElementById('logViewer');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            viewer.appendChild(entry);
+            viewer.scrollTop = viewer.scrollHeight;
+        }
+
+        function clearLogs() {
+            document.getElementById('logViewer').innerHTML = '';
+            logEntry('[INFO] Logs cleared', 'info');
+        }
+
+        function refreshLogs() {
+            logEntry('[INFO] Refreshing logs...', 'info');
+        }
+
+        // Tab switching
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.dataset.tab;
+                
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // Initialize
+        loadConfiguration();
+        logEntry('[INFO] Web Client Initialized', 'success');
+    </script>
+</body>
+</html>

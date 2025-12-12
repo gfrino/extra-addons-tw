@@ -23,7 +23,10 @@
                             <field name="name"/>
                             <field name="model_name" readonly="1"/>
                             <field name="group_by_period" widget="radio"/>
-                            <field name="filter_selection" widget="radio"/>
+                            <field name="domain" widget="domain"
+                                context="{'model': model_name, 'res_model': model_name}"
+                                options="{'allow_custom_domain': True, 'model': model_name, 'res_model': model_name}"
+                                placeholder="Aggiungi filtro"/>
                             <field name="sequence"/>
                         </group>
                     </group>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Direct thermal printer configuration is not used in cloud deployments.
+             Use Print Server Client feature instead (see print_server_client_views.xml) -->
+    </data>
+</odoo>

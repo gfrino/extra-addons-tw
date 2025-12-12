@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Print Server Client List View -->
+        <record id="view_print_server_client_list" model="ir.ui.view">
+            <field name="name">print.server.client.list</field>
+            <field name="model">print.server.client</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="pos_config_id"/>
+                    <field name="client_host"/>
+                    <field name="client_port"/>
+                    <field name="printer_ip"/>
+                    <field name="is_active"/>
+                    <field name="last_test_result"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Print Server Client Form View -->
+        <record id="view_print_server_client_form" model="ir.ui.view">
+            <field name="name">print.server.client.form</field>
+            <field name="model">print.server.client</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="e.g., Cassa 1"/></h1>
+                        </div>
+                        
+                        <div class="alert alert-info" role="alert">
+                            <strong>📖 Setup Instructions:</strong>
+                            <ol style="margin-top: 10px;">
+                                <li><strong>Download</strong> Print Server Client from: <a href="https://github.com/tw-company/tw_possible_print_driver" target="_blank">GitHub Repository</a></li>
+                                <li><strong>Extract</strong> the folder: <code>tw_possible_print_driver/print_server_client/src</code></li>
+                                <li><strong>Run on your local machine:</strong>
+                                    <pre style="background-color: #f5f5f5; padding: 10px; margin: 5px 0;">
+python print_server.py</pre>
+                                </li>
+                                <li><strong>Open browser:</strong> <code>https://localhost:8443</code></li>
+                                <li><strong>Configure:</strong> Printer IP and copy the token below</li>
+                                <li><strong>Test:</strong> Click "Test Connection" button below</li>
+                            </ol>
+                        </div>
+                        
+                        <group col="1">
+                            <separator string="General Settings"/>
+                            <field name="pos_config_id"/>
+                            <field name="is_active"/>
+                            
+                            <separator string="Client Connection"/>
+                            <field name="client_host" help="The host where Print Server runs (usually localhost)"/>
+                            <field name="client_port" help="Port where Print Server listens (default: 8443)"/>
+                            <field name="connection_timeout" help="Timeout in seconds for printer connection"/>
+                            
+                            <separator string="Authentication Token"/>
+                            <field name="auth_token" widget="char" help="Copy this token to the Print Server Client application"/>
+                            
+                            <separator string="Printer Settings"/>
+                            <field name="printer_ip" help="IP address of your local thermal printer (e.g., 192.168.1.23)"/>
+                            <field name="printer_port" help="Port of thermal printer (default: 9100)"/>
+                            <field name="printer_dots_per_line" help="Paper width in dots (usually 576 for 80mm printers)"/>
+                            <field name="printer_charset" help="Character encoding (GB18030 for Chinese, ASCII for English)"/>
+                            
+                            <separator string="Test Status"/>
+                            <field name="last_test_date"/>
+                            <field name="last_test_result"/>
+                        </group>
+                    </sheet>
+                    
+                    <footer>
+                        <button name="action_test_connection" type="object" class="btn-primary" string="🔍 Test Connection"/>
+                        <button class="btn-default" special="cancel" string="Close"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Print Server Client Search View -->
+        <record id="view_print_server_client_search" model="ir.ui.view">
+            <field name="name">print.server.client.search</field>
+            <field name="model">print.server.client</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="pos_config_id"/>
+                    <field name="client_host"/>
+                    <separator/>
+                    <filter name="active" string="Active" domain="[('is_active', '=', True)]"/>
+                    <filter name="inactive" string="Inactive" domain="[('is_active', '=', False)]"/>
+                    <separator/>
+                    <filter name="success" string="Last Test Success" domain="[('last_test_result', '=', 'success')]"/>
+                    <filter name="failed" string="Last Test Failed" domain="[('last_test_result', '=', 'failed')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for Print Server Clients -->
+        <record id="action_print_server_client" model="ir.actions.act_window">
+            <field name="name">Print Server Clients</field>
+            <field name="res_model">print.server.client</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No print server clients configured yet.
+                </p>
+                <p>
+                    Create a new print server client to enable local thermal printer printing.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item: Add to Administration -->
+        <menuitem
+            id="menu_print_server_client"
+            name="Print Server Clients"
+            parent="base.menu_administration"
+            action="action_print_server_client"
+            sequence="50"/>
+
+        <!-- Extend POS Config Form View to add Print Server option -->
+        <record id="view_pos_config_form_print_server" model="ir.ui.view">
+            <field name="name">pos.config.form.print.server</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <separator string="Print Server Settings" colspan="2"/>
+                    <group colspan="2" col="1">
+                        <field name="use_print_server"/>
+                        <field name="print_server_client_id" invisible="[('use_print_server', '=', False)]" required="[('use_print_server', '=', True)]"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
