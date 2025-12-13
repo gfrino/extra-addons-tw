@@ -1,0 +1,11 @@
+{
+  "odoo_url": "https://your-odoo-domain",
+  "bearer_token": "REPLACE_WITH_TOKEN",
+  "verify_ssl": true,
+  "polling_interval": 3,
+  "printer_code": "pos_main",
+  "printer_map": {
+    "pos_main": { "type": "escpos", "ip": "192.168.1.23", "port": 9100, "timeout": 5 },
+    "backoffice": { "type": "pdf" }
+  }
+}

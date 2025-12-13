@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_print_job_tree" model="ir.ui.view">
+        <field name="name">print.job.tree</field>
+        <field name="model">print.job</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="uuid"/>
+                <field name="printer_code"/>
+                <field name="payload_type"/>
+                <field name="state"/>
+                <field name="attempts"/>
+                <field name="write_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_print_job_form" model="ir.ui.view">
+        <field name="name">print.job.form</field>
+        <field name="model">print.job</field>
+        <field name="arch" type="xml">
+            <form string="Print Job">
+                <sheet>
+                    <group col="1">
+                        <field name="uuid" readonly="1"/>
+                        <field name="printer_code"/>
+                        <field name="payload_type"/>
+                        <field name="state"/>
+                        <field name="attempts" readonly="1"/>
+                        <field name="error_message"/>
+                        <field name="write_date" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_job" model="ir.actions.act_window">
+        <field name="name">Print Jobs</field>
+        <field name="res_model">print.job</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_print_jobs" name="Print Jobs" parent="point_of_sale.menu_point_config_product" action="action_print_job" sequence="60"/>
+</odoo>

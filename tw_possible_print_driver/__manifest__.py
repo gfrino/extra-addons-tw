@@ -6,33 +6,24 @@
     'author': 'ticinoWEB',
     'website': 'https://ticinoweb.com',
     'license': 'AGPL-3',
-    'summary': 'Network Thermal Printer Driver (ESC/POS) for Odoo POS',
+    'summary': 'Pull-based printing via local agent (ESC/POS, PDF)',
     'description': """
-This module adds support for printing on network thermal printers (80mm) via TCP/IP using the ESC/POS protocol.
+Simple and robust cloud-to-local printing for Odoo 17 POS and reports
+using a pull-based local agent. No browser printing, no Chrome extensions,
+no inbound LAN connections.
 
 Features:
-- Configure printer IP address and port in POS settings
-- Support for 80mm thermal printers
-- ESC/POS protocol (Epson, Star, Bixolon compatible)
-- Network connectivity via TCP/IP
-- Support for multiple dot widths (576 dots/line or 512 dots/line)
-- GB18030 character set support (Simplified Chinese)
-- Bitmap image download and print support
-- Error handling and user notifications
-
-Dependencies:
-- Built-in Python libraries only (socket, struct, time)
-- No additional pip packages required
-
-The printer configuration can be found in Point of Sale > POS Settings
-under the "Thermal Printer Settings" section.
+- Asynchronous print job queue (print.job)
+- REST endpoints for agent polling and ACK
+- Support ESC/POS (raw TCP 9100) and PDF (system print)
+- Safe retries, clear states (pending/printing/done/error)
     """,
     'depends': [
         'point_of_sale',
     ],
     'data': [
-        'views/pos_config_views.xml',
-        'views/print_server_client_views.xml',
+        'security/ir.model.access.csv',
+        'views/print_job_views.xml',
     ],
     'installable': True,
     'application': False,

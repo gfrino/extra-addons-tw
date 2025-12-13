@@ -111,28 +111,5 @@ python print_server.py</pre>
             </field>
         </record>
 
-        <!-- Menu Item: Add to Administration -->
-        <menuitem
-            id="menu_print_server_client"
-            name="Print Server Clients"
-            parent="base.menu_administration"
-            action="action_print_server_client"
-            sequence="50"/>
-
-        <!-- Extend POS Config Form View to add Print Server option -->
-        <record id="view_pos_config_form_print_server" model="ir.ui.view">
-            <field name="name">pos.config.form.print.server</field>
-            <field name="model">pos.config</field>
-            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//form" position="inside">
-                    <separator string="Print Server Settings" colspan="2"/>
-                    <group colspan="2" col="1">
-                        <field name="use_print_server"/>
-                        <field name="print_server_client_id" invisible="[('use_print_server', '=', False)]" required="[('use_print_server', '=', True)]"/>
-                    </group>
-                </xpath>
-            </field>
-        </record>
-    </data>
-</odoo>
+        <!-- Menu Item: Place under POS > Configurazione -->
+        <odoo/>
